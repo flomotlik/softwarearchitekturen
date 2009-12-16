@@ -1,6 +1,13 @@
-<p>
-  <b>Login:</b>
-  <%=h @user.login %>
-</p>
+<div id="one_col">
+	<h2>Account: <%= @user.login%></h2>
+	<div id="sub_menu">
+		<ul>
+			<li><%= link_to 'Edit', edit_account_path %></li>
+		</ul>
+	</div>
+  	<div>
+		<b>Login:</b>
+		<%=h @user.login %>
+	</div>
+</div>
  
-<%= link_to 'Edit', edit_account_path %>

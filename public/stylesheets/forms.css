@@ -1,0 +1,17 @@
+
+#user_login, #user_password, #user_password_confirmation, #user_session_login, #user_session_password{ 
+	font-size: 100%;
+	border: 3px solid #cdcdcd;
+	padding: 2px 3px;
+}
+
+.fieldWithErrors{
+	background: red;
+}
+
+.errorExplanation h2{
+	color: red!important;
+	border:none;
+	padding-left: 0!important;
+	padding-top: 0!important;
+}
