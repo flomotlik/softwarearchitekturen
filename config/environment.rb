@@ -41,6 +41,7 @@ config.gem "authlogic"
   # config.i18n.default_locale = :de
   
   # Memcached constant field
+  require 'memcache'
   CACHE = MemCache.new('127.0.0.1')
   
 end
