@@ -1,0 +1,3 @@
+class UserBlock < ActiveRecord::Base
+  belongs_to :user
+end
