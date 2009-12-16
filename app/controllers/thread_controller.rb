@@ -1,0 +1,2 @@
+class ThreadController < ApplicationController
+end
