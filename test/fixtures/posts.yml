@@ -1,9 +1,9 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
-one:
-  content: MyText
-  date: 2009-12-16 10:12:46
-
-two:
-  content: MyText
-  date: 2009-12-16 10:12:46
+#one:
+#  content: MyText
+#  date: 2009-12-16 10:12:46
+#
+#two:
+#  content: MyText
+#  date: 2009-12-16 10:12:46

@@ -1,9 +1,11 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
-one:
-  thread_id: 9.99
-  user: 
+userthread1:
+    id: 1
+    private_thread_id: 1
+    user_id: 1
 
-two:
-  thread_id: 9.99
-  user: 
+userthread2:
+    id: 2
+    private_thread_id: 2
+    user_id: 1

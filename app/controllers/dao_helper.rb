@@ -41,10 +41,10 @@ class DaoHelper
   end
   
   def find_friendships_by_userid(user_id)
-    key = "Friendship:" + user_id.to_s
+    key = "Friendships:" + user_id.to_s
     tmp_friendships = CACHE[key] 
     if  tmp_friendship == nil
-      tmp_friendships = Friendship.find(:all, :condition => ["user = ?", user_id]) #INSPECT ME
+      tmp_friendships = Friendship.find(:all, :condition => ["user_id = ?", user_id]) #INSPECT ME
       CACHE.set(key, tmp_friendships, 1.hour)
     end
     
@@ -91,8 +91,24 @@ class DaoHelper
     
   end
   
-  def find_userthreads_by_id(user_id)
-    
+  def find_threads_by_userid(user_id)
+    key = "UserThreads:User:" + user_id.to_s
+    tmp_userthreads = CACHE[key] 
+    if  tmp_userthreads == nil
+      tmp_userthreads = UserThread.find :all, :conditions => ["user_id = ?", user_id]
+      CACHE.set(key, tmp_userthreads, 1.hour)
+    end
+    tmp_threads = Array.new
+    for userThread in tmp_userthreads do
+      key_thread = "PrivateThread:" + userThread.private_thread_id.to_s
+      tmp_thread = CACHE[key_thread] 
+      if  tmp_thread == nil
+        tmp_thread = PrivateThread.find(userThread.private_thread_id)
+        CACHE.set(key_thread, tmp_thread, 1.hour)
+      end
+      tmp_threads.push(tmp_thread)
+    end
+    return tmp_threads
   end
   
   def find_users_by_threadid(thread_id)

@@ -1,9 +1,11 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
-one:
+thread1:
+  id: 1
   date: 2009-12-16 10:15:47
-  title: MyString
+  title: Thread 1
 
-two:
+thread2:
+  id: 2
   date: 2009-12-16 10:15:47
-  title: MyString
+  title: Thread 2

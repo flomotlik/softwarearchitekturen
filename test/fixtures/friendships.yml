@@ -1,11 +1,11 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
-one:
-  date: 2009-12-16 09:38:09
-  friend_id: 9.99
-  user: 
-
-two:
-  date: 2009-12-16 09:38:09
-  friend_id: 9.99
-  user: 
+#one:
+#  date: 2009-12-16 09:38:09
+#  friend_id: 9.99
+#  user: 
+#
+#two:
+#  date: 2009-12-16 09:38:09
+#  friend_id: 9.99
+#  user: 
