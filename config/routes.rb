@@ -40,8 +40,11 @@ ActionController::Routing::Routes.draw do |map|
   # Install the default routes as the lowest priority.
   # Note: These default routes make all actions in every controller accessible via GET requests. You should
   # consider removing or commenting them out if you're using named routes and resources.
+  map.connect '', :controller => 'user_sessions', :action => 'new'
   map.connect ':controller/:action/:id'
   map.connect ':controller/:action/:id.:format'
+  
+  #map.connect "private_thread/:action", :controller => 'private_thread', :action => /[a-z_]+/i
   
   map.resource :user_session
   map.root :controller => "user_sessions", :action => "new"
@@ -49,4 +52,8 @@ ActionController::Routing::Routes.draw do |map|
   map.resource :account, :controller => "users"
   map.resources :users
   
+  #Use this pattern to add custom restful actions:
+  #map.resources :private_thread, :collection => { :completed => :get }, :member => { :complete => :put }
+  
+  map.resources :private_threads
 end

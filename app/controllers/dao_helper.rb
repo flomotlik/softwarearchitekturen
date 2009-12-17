@@ -1,4 +1,6 @@
 require 'singleton'
+require_dependency 'user_thread'
+require_dependency 'private_thread'
 
 class DaoHelper
   include Singleton

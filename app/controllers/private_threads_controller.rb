@@ -1,10 +1,7 @@
-require_dependency 'user_thread'
-require_dependency 'private_thread'
-
-class PrivateThreadController < ApplicationController
+class PrivateThreadsController < ApplicationController
   
   #List all threads
-  def list
+  def index
     #TODO: exchange with DAO access!
     @currentuser = current_user
     currentuserid = @currentuser.id
