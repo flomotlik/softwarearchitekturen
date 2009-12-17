@@ -5,6 +5,8 @@ require_dependency 'user'
 require_dependency 'friendship'
 require_dependency 'thread_entry'
 require_dependency 'entry'
+require_dependency 'comment'
+require_dependency 'user_post'
 
 class DaoHelper
   include Singleton
@@ -18,13 +20,7 @@ class DaoHelper
   end
   
   def save_user(user)
-    if user.save
-      key = "User:" + user.id.to_s
-      CACHEset(key, user, 1.hour)
-      return true;
-    else
-      return false;
-    end
+    return self.save_object(user) {"User:" + user.id.to_s}
   end
   
   def update_user(user, attributes)
@@ -56,19 +52,27 @@ class DaoHelper
     return friends
   end
   
+  ###
+  # Please NOTE: the controller has to call this method twice with 
+  # both friendship objects in order to maintain consistency.
+  # E.g. user1 and user2 are now friends
+  # Call the method twice with the object friendship1 and friendship2
+  # the first has user_id = user1.id and friend_id = user2.id and the
+  # second vice versa
+  ###
   def save_friendship(friendship)
-    # not sure what to do here...
-    # get all friendships of user with id friendship.user_id
-    # push this friendship to his friendships
-    # than do the same for the other direction
-    # or just save the friendship... will be inconsistent
+    friendships = self.find_friendships_by_userid(friendship.user_id)
+    friendships.push(friendship)
+    self.save_object(friendships) {"Friendships:" + friendship.user_id.to_s}
   end
   
   ##Can we delete user friendships?
   ##Can we update them?
   
   def save_userpost(post)
-    
+    userposts = self.find_userposts_by_userid(post.user_id)
+    userposts.push(post)
+    self.save_object(userposts) {"UserPosts:" + post.user_id.to_s}
   end
   
   def find_userposts_by_userid(user_id)
@@ -92,7 +96,7 @@ class DaoHelper
   #is this the Comment object or the UserComment Object
   #do we need methods for both?
   def save_comment(comment)
-    
+    self.save_object(comment) {"Comment:" + comment.id.to_s}
   end
   
   def save_userblock(userblock)
@@ -104,7 +108,8 @@ class DaoHelper
   end
   
   def find_userblocks_by_userid(user_id)
-    
+    key = "Userblocks:" + user_id.to_s
+    return self.check_object(CACHE[key], key) {UserBlock.find(:all, :condition => ["user_id = ?", user_id])}
   end
   
   def find_threads_by_userid(user_id)
@@ -122,7 +127,7 @@ class DaoHelper
   
   def find_users_by_threadid(thread_id)
     
-  end
+  end 
   
   def find_thread(thread_id)
     key = "PrivateThreads:" + thread_id.to_s
@@ -140,9 +145,10 @@ class DaoHelper
   end
   
   def save_entry(entry)
-    
+    return self.save_object(entry) {"Entry:" + entry.id.to_s}
   end
   
+  ### helper methods ###
   def check_object(object, key)
     if object == nil
       result = yield
@@ -151,6 +157,16 @@ class DaoHelper
     end
     
     return object
+  end
+  
+  def save_object(object)
+    if object.save
+      key = yield
+      CACHE.set(key, object, 1.hour)
+      return true
+    else
+      return false
+    end
   end
   
 end
