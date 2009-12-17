@@ -1,7 +1,7 @@
 class CreateThreadEntries < ActiveRecord::Migration
   def self.up
     create_table :thread_entries do |t|
-      t.decimal :entry_id
+      t.references :entry
       t.references :thread
 
       t.timestamps

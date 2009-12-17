@@ -1,9 +1,31 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
-#one:
-#  entry_id: 9.99
-#  thread: 
-#
-#two:
-#  entry_id: 9.99
-#  thread: 
+threadentry1.1:
+  id: 1
+  entry_id: 1
+  thread_id: 1
+
+threadentry1.2:
+  id: 2
+  entry_id: 2
+  thread_id: 1
+
+threadentry1.3:
+  id: 3
+  entry_id: 3
+  thread_id: 1
+  
+threadentry2.1:
+  id: 4
+  entry_id: 4
+  thread_id: 2
+
+threadentry2.2:
+  id: 5
+  entry_id: 5
+  thread_id: 2
+
+threadentry2.3:
+  id: 6
+  entry_id: 6
+  thread_id: 2

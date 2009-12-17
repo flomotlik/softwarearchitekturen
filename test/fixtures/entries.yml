@@ -1,11 +1,37 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
-#one:
-#  content: MyText
-#  date: 2009-12-16 10:17:06
-#  user_id: 9.99
-#
-#two:
-#  content: MyText
-#  date: 2009-12-16 10:17:06
-#  user_id: 9.99
+entry1.1:
+  id: 1
+  content: Text of Entry 1 in Thread 1, by User1
+  date: 2009-12-16 10:17:06
+  user_id: 1
+
+entry1.2:
+  id: 2
+  content: Text of Entry 2 in Thread 1, by User1
+  date: 2009-12-16 10:17:06
+  user_id: 1
+  
+entry1.3:
+  id: 3
+  content: Text of Entry 3 in Thread 1, by User1
+  date: 2009-12-16 10:17:06
+  user_id: 1
+
+entry2.1:
+  id: 4
+  content: Text of Entry 1 in Thread 2, by User2
+  date: 2009-12-16 10:17:06
+  user_id: 2
+
+entry2.2:
+  id: 5
+  content: Text of Entry 2 in Thread 2, by User2
+  date: 2009-12-16 10:17:06
+  user_id: 2
+  
+entry2.3:
+  id: 6
+  content: Text of Entry 3 in Thread 2, by User2
+  date: 2009-12-16 10:17:06
+  user_id: 2

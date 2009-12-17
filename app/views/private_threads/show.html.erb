@@ -1,0 +1,31 @@
+<div id="left">
+				<h2><%=  @currentthread ? @currentthread.title : 'Untitled Thread' %></h2>
+				<div class="subject" style="padding-left: 14px!important">CHANGEME!</div>
+				
+				
+				<% for threadentry in @threadentries 
+					entry = DaoHelper.instance.find_entry threadentry.entry_id
+					user = DaoHelper.instance.find_user_by_id entry.user_id %>
+				
+				<div class="message">
+					<div><a href="#"><%= user.login %></a>, <span class="meta" style="padding-top: 0!important"><%= entry.date %></span></div>
+					<div class="message_content">
+						<%= entry.content %>
+					</div>			
+				</div>
+				<% end %>
+				
+				
+				<div>
+					<div class="answer">
+						<p>
+						<form action="#" method="get">
+							<input type="text" value="" name="comment" class="input_answer" />
+							<input type="submit" value="answer" />
+						</form>
+						</p>
+					</div>
+				</div>
+				
+			</div>
+			<div id="right">&nbsp;</div>

@@ -8,6 +8,13 @@ class PrivateThreadsController < ApplicationController
     @threads = DaoHelper.instance.find_threads_by_userid(currentuserid)
   end
   
+  def show
+    @currentthread = DaoHelper.instance.find_thread params[:id]
+    @threadentries = DaoHelper.instance.find_thread_entries_by_threadid params[:id]
+  end
+  
+
+  
   #Create a new thread (do not save thread yet)
   def new
     
@@ -23,6 +30,6 @@ class PrivateThreadsController < ApplicationController
   
   end
   
-  
+ 
   
 end

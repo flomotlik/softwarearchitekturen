@@ -3,6 +3,8 @@ require_dependency 'user_thread'
 require_dependency 'private_thread'
 require_dependency 'user'
 require_dependency 'friendship'
+require_dependency 'thread_entry'
+require_dependency 'entry'
 
 class DaoHelper
   include Singleton
@@ -122,15 +124,25 @@ class DaoHelper
     
   end
   
-  def find_threads(thread_id)
-    
+  def find_thread(thread_id)
+    key = "PrivateThreads:" + thread_id.to_s
+    return self.check_object(CACHE[key], key) {PrivateThread.find(thread_id)}
+  end
+  
+  def find_thread_entries_by_threadid(thread_id)
+    key = "ThreadEntry:PrivateThread:" + thread_id.to_s
+    return self.check_object(CACHE[key], key) {ThreadEntry.find :all, :conditions => ["thread_id = ?", thread_id]}
+  end
+  
+  def find_entry(entry_id)
+    key = "Entry:" + entry_id.to_s
+    return self.check_object(CACHE[key], key) {Entry.find(entry_id)}
   end
   
   def save_entry(entry)
     
   end
   
-  private
   def check_object(object, key)
     if object == nil
       result = yield
