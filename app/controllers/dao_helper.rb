@@ -1,6 +1,8 @@
 require 'singleton'
 require_dependency 'user_thread'
 require_dependency 'private_thread'
+require_dependency 'user'
+require_dependency 'friendship'
 
 class DaoHelper
   include Singleton
@@ -10,13 +12,7 @@ class DaoHelper
   
   def find_user_by_id(user_id)
     key = "User:" + user_id.to_s
-    tmp_user = CACHE[key] 
-    if  tmp_user == nil
-      tmp_user = User.find(user_id)
-      CACHE.set(key, tmp_user, 1.hour)
-    end
-    
-    return tmp_user
+    return self.check_object(CACHE[key], key) {User.find(user_id)}
   end
   
   def save_user(user)
@@ -44,22 +40,26 @@ class DaoHelper
   
   def find_friendships_by_userid(user_id)
     key = "Friendships:" + user_id.to_s
-    tmp_friendships = CACHE[key] 
-    if  tmp_friendship == nil
-      tmp_friendships = Friendship.find(:all, :condition => ["user_id = ?", user_id]) #INSPECT ME
-      CACHE.set(key, tmp_friendships, 1.hour)
-    end
-    
-    return tmp_friendships
+    return self.check_object(CACHE[key], key) {Friendship.find(:all, :condition => ["user_id = ?", user_id])}
   end
   
   
   def find_friends_by_userid(user_id)
+    friendships = self.find_friendships_by_userid(user_id)
+    friends = Array.new
+    friendships.each do |f|
+      friends.push(self.find_user_by_id(f.friend_id))
+    end
     
+    return friends
   end
   
   def save_friendship(friendship)
-    
+    # not sure what to do here...
+    # get all friendships of user with id friendship.user_id
+    # push this friendship to his friendships
+    # than do the same for the other direction
+    # or just save the friendship... will be inconsistent
   end
   
   ##Can we delete user friendships?
@@ -69,10 +69,22 @@ class DaoHelper
     
   end
   
-  #what is returned by this method
-  #UserPost objects or PublicPost objects???
   def find_userposts_by_userid(user_id)
-    
+    key = "UserPosts:" + user_id.to_s
+    return self.check_object(CACHE[key], key) {UserPost.find(:all, :condition => ["user_id=?", user_id])}
+  end
+  
+  def find_publicposts_by_userid(user_id)
+    userposts = self.find_userposts_by_userid(user_id)
+    posts = Array.new
+    userposts.each do |p|
+      posts.push(self.find_publicpost_by_id(p.post_id))
+    end
+  end
+  
+  def find_publicpost_by_id(post_id)
+    key = "PublicPost:" + post_id.to_s
+    return self.check_object(CACHE[key], key) {PublicPost.find(post_id)}
   end
   
   #is this the Comment object or the UserComment Object
@@ -95,19 +107,12 @@ class DaoHelper
   
   def find_threads_by_userid(user_id)
     key = "UserThreads:User:" + user_id.to_s
-    tmp_userthreads = CACHE[key] 
-    if  tmp_userthreads == nil
-      tmp_userthreads = UserThread.find :all, :conditions => ["user_id = ?", user_id]
-      CACHE.set(key, tmp_userthreads, 1.hour)
-    end
+    tmp_userthreads = self.check_object(CACHE[key], key) {UserThread.find :all, :conditions => ["user_id = ?", user_id]} 
+    
     tmp_threads = Array.new
     for userThread in tmp_userthreads do
       key_thread = "PrivateThread:" + userThread.private_thread_id.to_s
-      tmp_thread = CACHE[key_thread] 
-      if  tmp_thread == nil
-        tmp_thread = PrivateThread.find(userThread.private_thread_id)
-        CACHE.set(key_thread, tmp_thread, 1.hour)
-      end
+      tmp_thread = self.check_object(CACHE[key_thread], key_thread) {PrivateThread.find(userThread.private_thread_id)} 
       tmp_threads.push(tmp_thread)
     end
     return tmp_threads
@@ -117,11 +122,23 @@ class DaoHelper
     
   end
   
+  def find_threads(thread_id)
+    
+  end
+  
   def save_entry(entry)
     
   end
   
-  #... and some more.. please add everything you think is missing..
-  #I will continue tomorrow!
+  private
+  def check_object(object, key)
+    if object == nil
+      result = yield
+      CACHE.set(key, result, 1.hour)
+      return result
+    end
+    
+    return object
+  end
   
 end
