@@ -38,7 +38,12 @@ class DaoHelper
   
   def find_friendships_by_userid(user_id)
     key = "Friendships:" + user_id.to_s
-    return self.check_object(CACHE[key], key) {Friendship.find(:all, :condition => ["user_id = ?", user_id])}
+    return self.check_object(CACHE[key], key) {Friendship.find(:all, :conditions => ["user_id = ?", user_id])}
+  end
+  
+  def find_friendship_by_userids(user1, user2)
+    friendship = Friendship.find(:conditions => ["user_id = ? AND friend = ?", user1, user2]) 
+    
   end
   
   
@@ -46,7 +51,7 @@ class DaoHelper
     friendships = self.find_friendships_by_userid(user_id)
     friends = Array.new
     friendships.each do |f|
-      friends.push(self.find_user_by_id(f.friend_id))
+      friends.push(self.find_user_by_id(f.friend))
     end
     
     return friends
@@ -77,7 +82,7 @@ class DaoHelper
   
   def find_userposts_by_userid(user_id)
     key = "UserPosts:" + user_id.to_s
-    return self.check_object(CACHE[key], key) {UserPost.find(:all, :condition => ["user_id=?", user_id])}
+    return self.check_object(CACHE[key], key) {UserPost.find(:all, :conditions => ["user_id=?", user_id])}
   end
   
   def find_publicposts_by_userid(user_id)
@@ -113,7 +118,7 @@ class DaoHelper
   
   def find_userblocks_by_userid(user_id)
     key = "Userblocks:" + user_id.to_s
-    return self.check_object(CACHE[key], key) {UserBlock.find(:all, :condition => ["user_id = ?", user_id])}
+    return self.check_object(CACHE[key], key) {UserBlock.find(:all, :conditions => ["user_id = ?", user_id])}
   end
   
   def find_threads_by_userid(user_id)
@@ -131,7 +136,7 @@ class DaoHelper
   
   def find_users_by_threadid(thread_id)
     key = "UserThreads:Thread" + thread_id.to_s
-    tmp_userthreads = self.check_object(CACHE[key], key) {UserThread.find(:all, :condition => ["private_thread_id = ?", thread_id])}
+    tmp_userthreads = self.check_object(CACHE[key], key) {UserThread.find(:all, :conditions => ["private_thread_id = ?", thread_id])}
     tmp_users = Array.new
     tmp_userthreads.each do |ut|
       user_key = "User:" + ut.user_id.to_s

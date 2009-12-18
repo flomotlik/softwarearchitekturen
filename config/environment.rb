@@ -42,6 +42,6 @@ config.gem "authlogic"
   
   # Memcached constant field
   require 'memcache'
-  CACHE = MemCache.new('127.0.0.1')
+  #CACHE = MemCache.new('127.0.0.1')
   
 end

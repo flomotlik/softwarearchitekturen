@@ -56,4 +56,5 @@ ActionController::Routing::Routes.draw do |map|
   #map.resources :private_thread, :collection => { :completed => :get }, :member => { :complete => :put }
   
   map.resources :private_threads
+  map.resources :friends
 end

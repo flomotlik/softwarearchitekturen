@@ -2,7 +2,7 @@ class CreateFriendships < ActiveRecord::Migration
   def self.up
     create_table :friendships do |t|
       t.timestamp :date
-      t.decimal :friend_id
+      t.integer :friend
       t.references :user
 
       t.timestamps
