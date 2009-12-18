@@ -93,18 +93,22 @@ class DaoHelper
     return self.check_object(CACHE[key], key) {PublicPost.find(post_id)}
   end
   
-  #is this the Comment object or the UserComment Object
-  #do we need methods for both?
   def save_comment(comment)
     self.save_object(comment) {"Comment:" + comment.id.to_s}
   end
   
   def save_userblock(userblock)
-    
+    userblocks = self.find_userblocks_by_userid(userblock.user_id)
+    userblocks.push(userblock)
+    self.save_object(userblocks) {"Userblocks:" + user_id.to_s}
   end
   
-  def delete_userblock(userblock) #parameter is negotiatable
-    
+  #INSPECT
+  def delete_userblock(userblock)
+    userblocks = self.find_userblocks_by_userid(userblock.user_id)
+    userblocks.delete(userblock)
+    UserBlock.delete(:all, :condition => ["user_id= ? AND blocked_id = ?", userblock.user_id, userblock.blocked_id])
+    self.save_object(userblocks)
   end
   
   def find_userblocks_by_userid(user_id)
@@ -126,7 +130,16 @@ class DaoHelper
   end
   
   def find_users_by_threadid(thread_id)
+    key = "UserThreads:Thread" + thread_id.to_s
+    tmp_userthreads = self.check_object(CACHE[key], key) {UserThread.find(:all, :condition => ["private_thread_id = ?", thread_id])}
+    tmp_users = Array.new
+    tmp_userthreads.each do |ut|
+      user_key = "User:" + ut.user_id.to_s
+      tmp_user = self.find_user_by_id(user_key)
+      tmp_users.push(tmp_user)
+    end
     
+    return tmp_users
   end 
   
   def find_thread(thread_id)
