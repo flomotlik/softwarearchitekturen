@@ -165,6 +165,13 @@ class DaoHelper
     return self.save_object(thread_entry) {"ThreadEntry:" + thread_entry.id.to_s}
   end
   
+  def find_newest_entry_for_thread(thread_id)
+    thread_entries = self.find_thread_entries_by_threadid thread_id
+    thread_entries.sort! { |a, b|  a.date <=> b.date }
+    newest_thread_entry = thread_entries.last
+    return self.find_entry newest_thread_entry.entry_id
+  end
+  
   # Saves a NEW entry and a NEW thread_entry to an EXISTING thread
   # enty.content has to be set already
   def add_new_entry_to_thread(entry, thread_entry, private_thread, adding_user)

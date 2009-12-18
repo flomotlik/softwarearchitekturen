@@ -1,6 +1,6 @@
 class PrivateThreadsController < ApplicationController
   
-  helper_method :find_entry, :find_user_by_id
+  helper_method :find_entry, :find_user_by_id, :content_of_newest_threadentry
   
   #List all threads
   def index
@@ -29,7 +29,16 @@ class PrivateThreadsController < ApplicationController
     new_thread_entry = ThreadEntry.new
     @currentthread = DaoHelper.instance.find_thread params[:thread_id]
     DaoHelper.instance.add_new_entry_to_thread new_entry, new_thread_entry, @currentthread, current_user
-    redirect_to :action => "index"
+    @threadentries = DaoHelper.instance.find_thread_entries_by_threadid params[:thread_id]
+    respond_to do |format|
+      format.html { redirect_to :action => "show", :id => params[:thread_id] }
+      format.js
+    end
+  end
+  
+  def content_of_newest_threadentry(thread_id)
+    newest_entry = DaoHelper.instance.find_newest_entry_for_thread thread_id
+    return newest_entry.content
   end
   
   #Create a new thread (do not save thread yet)

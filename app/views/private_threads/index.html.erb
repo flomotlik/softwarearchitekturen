@@ -8,44 +8,7 @@
 					<br style="clear: all" />
 				</div>-->
 				<div id="messages">
-				<% for thread in @threads %>
-					<div class="message unread" id="msg_1">
-						<table>
-							<tbody>
-								<tr>
-									<td class="message_from">
-										<div><a href="#">User Names</a></div>
-										<div class="meta" style="padding-top: 0!important"><%= thread.date %></div>
-									</td>
-									<td>
-										<div class="subject"><%= link_to thread.title, {:action => :show, :id => thread.id} %></a></div>
-										<div class="message_content">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, invidunt ut labore  At vero ...</div>
-									</td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
-				<% end %>
-					
-<!--
-					
-					<div class="message"  id="msg_2">
-						<table>
-							<tbody>
-								<tr>
-									<td class="message_from">
-										<div><a href="#">User Name</a></div>
-										<div class="meta" style="padding-top: 0!important">24. Nov, 13:33</div>
-									</td>
-									<td>
-										<div class="subject"><a href="#">Super wichtige Nachricht</a></div>
-										<div class="message_content">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, invidunt ut labore  At vero ...</div>
-									</td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
--->
+				<%= render :partial => 'threads_index', :object => @threads %>
 				</div>
 			</div>
 			<div id="right">right</div>
