@@ -1,0 +1,25 @@
+<div id="left">
+    <h2>Create new private Message</h2>
+	<% form_tag( {:action => 'saveNew'} ) do %>
+    <div id="threadentry_userlist">
+    	Select receivers:<br>
+        <% for friend in @friends %>
+        <%= check_box_tag 'receiving_users[]', friend.id %>
+		<%= friend.login %>
+        <% end -%>
+    </div>
+    <div id="threadentry_main">
+        <div id="new_message">
+            Title of message:<%= text_field(:newthread, :title, :class => "input_answer_threads") %>
+            <br>
+            <br>
+            Message text:<%= text_area(:newentry, :content, :cols => 30, :rows => 8, :class => "input_answer_threads") %>
+            <br/>
+            <%= submit_tag("Submit new message") %>   
+        </div>
+    </div>
+	<% end %>
+</div>
+<div id="right">
+    right
+</div>

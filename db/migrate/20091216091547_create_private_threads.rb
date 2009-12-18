@@ -3,6 +3,7 @@ class CreatePrivateThreads < ActiveRecord::Migration
     create_table :private_threads do |t|
       t.timestamp :date
       t.string :title
+      t.integer :author_user_id
 
       t.timestamps
     end

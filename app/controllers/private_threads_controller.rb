@@ -1,6 +1,6 @@
 class PrivateThreadsController < ApplicationController
   
-  helper_method :find_entry, :find_user_by_id, :content_of_newest_threadentry, :find_users_by_threadid
+  helper_method :find_entry, :find_user_by_id, :content_of_newest_threadentry, :find_users_by_threadid, :corrected_username
   
   #List all threads
   def index
@@ -27,6 +27,14 @@ class PrivateThreadsController < ApplicationController
     return DaoHelper.instance.find_users_by_threadid thread_id
   end
   
+  def corrected_username(user)
+    if user.id == current_user.id
+      return 'You'
+    else
+      return user.login
+    end
+  end
+  
   def add_entry_to_thread
     new_entry_params = params[:newentry]
     new_entry = Entry.new new_entry_params
@@ -46,15 +54,22 @@ class PrivateThreadsController < ApplicationController
     return newest_entry.content
   end
   
-  #Create a new thread (do not save thread yet)
   def new
-    
+    friendships = DaoHelper.instance.find_friendships_by_userid current_user.id
+    @friends = Array.new
+    for friendship in friendships do
+      @friends.push(DaoHelper.instance.find_user_by_id friendship.friend)
+    end
   end
   
   #Save a new thread (new has to be called before)
   def saveNew
-    
-   
+    new_thread_receivers_ids = params[:receiving_users]
+    new_thread = PrivateThread.new(params[:newthread])
+    new_thread_entry = ThreadEntry.new
+    new_entry = Entry.new(params[:newentry])
+    DaoHelper.instance.save_new_thread new_entry, new_thread_entry, new_thread, current_user, new_thread_receivers_ids
+    redirect_to :action => "index"
   end
   
   def submitToExisting

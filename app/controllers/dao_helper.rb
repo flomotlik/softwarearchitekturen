@@ -146,7 +146,7 @@ class DaoHelper
   end
   
   def find_users_by_threadid(thread_id)
-    key = "UserThreads:Thread" + thread_id.to_s
+    key = "UserThreads:Thread:" + thread_id.to_s
     tmp_userthreads = self.check_object(CACHE[key], key) {UserThread.find(:all, :conditions => ["private_thread_id = ?", thread_id])}
     tmp_users = Array.new
     tmp_userthreads.each do |ut|
@@ -177,8 +177,16 @@ class DaoHelper
     return self.save_object(entry) {"Entry:" + entry.id.to_s}
   end
   
+  def save_user_thread(user_thread)
+    return self.save_object(user_thread) {"UserThread:" + entry.id.to_s}
+  end
+  
   def save_thread_entry(thread_entry)
     return self.save_object(thread_entry) {"ThreadEntry:" + thread_entry.id.to_s}
+  end
+  
+  def save_private_thread(private_thread)
+    return self.save_object(private_thread) {"PrivateThread:" + private_thread.id.to_s}
   end
   
   def find_newest_entry_for_thread(thread_id)
@@ -189,7 +197,7 @@ class DaoHelper
   end
   
   # Saves a NEW entry and a NEW thread_entry to an EXISTING thread
-  # enty.content has to be set already
+  # entry.content has to be set already
   def add_new_entry_to_thread(entry, thread_entry, private_thread, adding_user)
     entry.user_id = adding_user.id
     entry.date = Time.now
@@ -201,6 +209,24 @@ class DaoHelper
     
     thread_mem_key = "ThreadEntry:PrivateThread:" + private_thread.id.to_s
     CACHE.delete(thread_mem_key)
+  end
+  
+  #Saves a NEW entry and a NEW thread_entry to a NEW thread
+  #thread.title, entry.content have to be set already
+  def save_new_thread(entry, thread_entry, private_thread, adding_user, receiving_users_ids)
+    private_thread.date = Time.now
+    private_thread.author_user_id = adding_user
+    saved_thread = save_private_thread private_thread
+    receiving_users_ids.push adding_user.id
+    for receiving_user_id in receiving_users_ids do
+      user_thread = UserThread.new 
+      user_thread.private_thread_id = saved_thread.id
+      user_thread.user_id = receiving_user_id
+      user_thread.save
+      user_thread_mem_key = "UserThreads:User:" + receiving_user_id.to_s
+      CACHE.delete(user_thread_mem_key)
+    end
+    self.add_new_entry_to_thread entry, thread_entry, private_thread, adding_user
   end
   
   ### helper methods ###

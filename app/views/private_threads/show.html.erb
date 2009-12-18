@@ -1,16 +1,15 @@
 <div id="left">
-	<%= link_to "<< Back to overview", {:action => :index} %>
+    <%= link_to "<< Back to overview", {:action => :index}, :class => 'context_menu_link'  %>
     <h2><%= @currentthread ? @currentthread.title : 'Untitled Thread' %></h2>
     <%= render :partial => 'thread_entries', :object => @threadentries %>
     <div>
-    	
         <div class="answer">
-        	<h3>Send an Answer:</h3>
+            <h3>Send an Answer:</h3>
             <p>
                 <% form_remote_tag :url => { :action => "add_entry_to_thread" }, :html => {:id => 'new_thread_entry' } do %>
-                <%= text_area(:newentry, :content, :cols => 30, :rows => 8, :class => "input_answer") %>
+                <%= text_area(:newentry, :content, :cols => 30, :rows => 8, :class => "input_answer_threads") %>
                 <%= hidden_field_tag(:thread_id, @currentthread.id) %>
-				<br/>
+                <br/>
                 <%= submit_tag("Submit Answer") %>
                 <% end %>
             </p>

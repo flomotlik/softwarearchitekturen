@@ -9,7 +9,7 @@
 							users = find_users_by_threadid thread.id
 							for user in users 
 						%>
-						<%= user.login %>&nbsp;
+						<%= corrected_username user %>&nbsp;
 						<% end %>
                     </div>
                     <div class="meta" style="padding-top: 0!important">

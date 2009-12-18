@@ -1,14 +1,11 @@
-			<div id="left">
-				<h2>Messages</h2>
-				<!--<div id="poster">
-					<form action="#" method="get">
-						<div><input type="text" value="" name="poster" id="field_poster" /></div>
-						<input type="submit" value="post" id="poster_submit" />
-					</form>
-					<br style="clear: all" />
-				</div>-->
-				<div id="messages">
-				<%= render :partial => 'threads_index', :object => @threads %>
-				</div>
-			</div>
-			<div id="right">right</div>
+<div id="left">
+	<%= link_to 'Write new message >>', {:action => :new}, :class => 'context_menu_link' %> 
+    <h2>Messages</h2>
+    
+    <div id="messages">
+        <%= render :partial => 'threads_index', :object => @threads %>
+    </div>
+</div>
+<div id="right">
+    right
+</div>

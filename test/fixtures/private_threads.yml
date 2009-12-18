@@ -4,8 +4,9 @@ thread1:
   id: 1
   date: 2009-12-16 10:15:47
   title: Thread 1
-
+  author_user_id: 1
 thread2:
   id: 2
   date: 2009-12-16 10:15:47
   title: Thread 2
+  author_user_id: 1
