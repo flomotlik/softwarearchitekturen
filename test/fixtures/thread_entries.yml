@@ -3,29 +3,35 @@
 threadentry1.1:
   id: 1
   entry_id: 1
+  date: 2009-12-16 10:17:06
   thread_id: 1
 
 threadentry1.2:
   id: 2
   entry_id: 2
+  date: 2009-12-16 10:17:06
   thread_id: 1
 
 threadentry1.3:
   id: 3
   entry_id: 3
+  date: 2009-12-16 10:17:06
   thread_id: 1
   
 threadentry2.1:
   id: 4
   entry_id: 4
+  date: 2009-12-16 10:17:06
   thread_id: 2
 
 threadentry2.2:
   id: 5
   entry_id: 5
+  date: 2009-12-16 10:17:06
   thread_id: 2
 
 threadentry2.3:
   id: 6
   entry_id: 6
+  date: 2009-12-16 10:17:06
   thread_id: 2

@@ -161,6 +161,25 @@ class DaoHelper
     return self.save_object(entry) {"Entry:" + entry.id.to_s}
   end
   
+  def save_thread_entry(thread_entry)
+    return self.save_object(thread_entry) {"ThreadEntry:" + thread_entry.id.to_s}
+  end
+  
+  # Saves a NEW entry and a NEW thread_entry to an EXISTING thread
+  # enty.content has to be set already
+  def add_new_entry_to_thread(entry, thread_entry, private_thread, adding_user)
+    entry.user_id = adding_user.id
+    entry.date = Time.now
+    saved_entry = self.save_entry(entry)
+    thread_entry.entry_id = saved_entry.id
+    thread_entry.thread_id = private_thread.id
+    thread_entry.date = Time.now
+    saved_thread_entry = self.save_thread_entry(thread_entry)
+    
+    thread_mem_key = "ThreadEntry:PrivateThread:" + private_thread.id.to_s
+    CACHE.delete(thread_mem_key)
+  end
+  
   ### helper methods ###
   def check_object(object, key)
     if object == nil
@@ -176,9 +195,9 @@ class DaoHelper
     if object.save
       key = yield
       CACHE.set(key, object, 1.hour)
-      return true
+      return object
     else
-      return false
+      return object
     end
   end
   

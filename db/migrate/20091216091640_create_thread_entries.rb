@@ -3,6 +3,7 @@ class CreateThreadEntries < ActiveRecord::Migration
     create_table :thread_entries do |t|
       t.references :entry
       t.references :thread
+      t.timestamp :date
 
       t.timestamps
     end

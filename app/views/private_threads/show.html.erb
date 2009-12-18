@@ -4,11 +4,12 @@
 				
 				
 				<% for threadentry in @threadentries 
-					entry = DaoHelper.instance.find_entry threadentry.entry_id
-					user = DaoHelper.instance.find_user_by_id entry.user_id %>
+					entry = find_entry threadentry.entry_id
+					user = find_user_by_id entry.user_id
+ 					%>
 				
 				<div class="message">
-					<div><a href="#"><%= user.login %></a>, <span class="meta" style="padding-top: 0!important"><%= entry.date %></span></div>
+					<div><%= user.login %> <span class="meta" style="padding-top: 0!important"><%= entry.date.to_s(:long) %></span></div>
 					<div class="message_content">
 						<%= entry.content %>
 					</div>			
@@ -19,10 +20,11 @@
 				<div>
 					<div class="answer">
 						<p>
-						<form action="#" method="get">
-							<input type="text" value="" name="comment" class="input_answer" />
-							<input type="submit" value="answer" />
-						</form>
+						<% form_tag(:action => 'add_entry_to_thread', :method => "post") do %>
+							<%= text_field(:newentry, :content, :class => "input_answer") %>
+							<%= hidden_field_tag(:thread_id, @currentthread.id) %>
+							<%= submit_tag("Answer with this message") %>
+						<% end %>
 						</p>
 					</div>
 				</div>
