@@ -62,20 +62,6 @@ table,tr,td{
 	width:634px;
 }
 
-#threadentry_userlist{
-	float:left;
-	/*padding: 17px 7px 17px 17px;*/
-	position:relative;
-	width:150px;
-}
-
-#threadentry_main{
-	float:left;
-	/*padding: 17px 7px 17px 17px;*/
-	position:relative;
-	width:440px;
-}
-
 #one_col{
 	padding: 17px 7px 17px 17px;
 	width:906px;
@@ -285,10 +271,28 @@ a:hover {
 
 /* THREADS ************/
 
-.input_answer_threads{width: 440px; }
+.input_answer_threads{width: 600px; }
+
+.thread_user{text-decoration: underline;}
+
+#threadentry_userlist{
+	float:left;
+	margin: 5px;
+	position:relative;
+	width:100px;
+}
+
+#threadentry_main{
+	float:left;
+	position:relative;
+	width:490px;
+}
+
 
 /* CONTEXT-LINKS **************/
 
 .context_menu_link{  background-color: #ddd; padding: 3px; font-size: 130%;}
-.context_menu_link :hover{ background-color: #FFF; text-decoration: underline;}
+.context_menu_link :hover{ background-color: #fff; text-decoration: underline;}
+
+
  */

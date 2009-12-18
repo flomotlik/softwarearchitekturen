@@ -134,7 +134,7 @@ class DaoHelper
       newest_entry = self.find_newest_entry_for_thread thread.id
       thread.date_of_newest_entry = newest_entry.date
     end
-    threads.sort! { |a, b|  a.date_of_newest_entry <=> b.date_of_newest_entry }
+    threads.sort! { |b, a|  a.date_of_newest_entry <=> b.date_of_newest_entry }
   end
   
   def find_users_by_threadid(thread_id)

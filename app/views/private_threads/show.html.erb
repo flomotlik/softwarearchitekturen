@@ -1,7 +1,16 @@
 <div id="left">
-    <%= link_to "<< Back to overview", {:action => :index}, :class => 'context_menu_link'  %>
+    <%= link_to "<< Back to overview", {:action => :index}, :class => 'context_menu_link' %>
     <h2><%= @currentthread ? @currentthread.title : 'Untitled Thread' %></h2>
-    <%= render :partial => 'thread_entries', :object => @threadentries %>
+    <div id="threadentry_userlist">
+        Participants:
+        <br>
+		<% for participant in @participants %>
+			<span class="thread_user"><%= participant.login %></span>&nbsp;
+        <% end %>
+    </div>
+    <div id="threadentry_main">
+        <%= render :partial => 'thread_entries', :object => @threadentries %>
+    </div>
     <div>
         <div class="answer">
             <h3>Send an Answer:</h3>

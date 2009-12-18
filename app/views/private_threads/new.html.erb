@@ -1,11 +1,12 @@
 <div id="left">
+	<%= link_to "<< Back to overview", {:action => :index}, :class => 'context_menu_link'  %>
     <h2>Create new private Message</h2>
 	<% form_tag( {:action => 'saveNew'} ) do %>
     <div id="threadentry_userlist">
-    	Select receivers:<br>
+    	Receivers:<br>
         <% for friend in @friends %>
         <%= check_box_tag 'receiving_users[]', friend.id %>
-		<%= friend.login %>
+		<span class="thread_user"><%= friend.login %></span><br>
         <% end -%>
     </div>
     <div id="threadentry_main">

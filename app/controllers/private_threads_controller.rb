@@ -13,6 +13,7 @@ class PrivateThreadsController < ApplicationController
   def show
     @currentthread = DaoHelper.instance.find_thread params[:id]
     @threadentries = DaoHelper.instance.find_thread_entries_by_threadid params[:id]
+    @participants = DaoHelper.instance.find_users_by_threadid params[:id]
   end
   
   def find_entry (entry_id)
