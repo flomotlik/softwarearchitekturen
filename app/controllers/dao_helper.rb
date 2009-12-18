@@ -42,7 +42,7 @@ class DaoHelper
   end
   
   def find_friendship_by_userids(user1, user2)
-    friendship = Friendship.find(:conditions => ["user_id = ? AND friend = ?", user1, user2]) 
+    friendship = Friendship.find(:first, :conditions => ["user_id = ? AND friend = ?", user1, user2]) 
     
   end
   
@@ -56,19 +56,11 @@ class DaoHelper
     
     return friends
   end
-  
-  ###
-  # Please NOTE: the controller has to call this method twice with 
-  # both friendship objects in order to maintain consistency.
-  # E.g. user1 and user2 are now friends
-  # Call the method twice with the object friendship1 and friendship2
-  # the first has user_id = user1.id and friend_id = user2.id and the
-  # second vice versa
-  ###
+
   def save_friendship(friendship)
-    friendships = self.find_friendships_by_userid(friendship.user_id)
-    friendships.push(friendship)
-    self.save_object(friendships) {"Friendships:" + friendship.user_id.to_s}
+    friendship.save
+    
+    CACHE.delete("Friendships:" + friendship.user_id.to_s)
   end
   
   ##Can we delete user friendships?
