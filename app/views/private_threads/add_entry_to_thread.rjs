@@ -1,2 +1,3 @@
 page.replace_html :threadentries, :partial => 'thread_entries', :object => @threadentries
-page.visual_effect :highlight, 'threadentries', :duration=>2
+page.visual_effect :highlight, @added_entry_div, :duration=>2
+page[:new_thread_entry].reset

@@ -5,19 +5,25 @@
             <tr>
                 <td class="message_from">
                     <div>
-                        <a href="#">User Names</a>
+                        <% 
+							users = find_users_by_threadid thread.id
+							for user in users 
+						%>
+						<%= user.login %>&nbsp;
+						<% end %>
                     </div>
                     <div class="meta" style="padding-top: 0!important">
-                        <%= thread.date %>
+                        <%= thread.date.to_s(:long) %>
                     </div>
                 </td>
                 <td>
                     <div class="subject">
-                    <%= link_to thread.title, {:action => :show, :id => thread.id} %></a>
-                </div>
-                <div class="message_content">
-                    <%= content_of_newest_threadentry thread.id %>
-                </div>
+                        <%= link_to thread.title, {:action => :show, :id => thread.id} %> 
+						<span class="meta" style="padding-top: 0!important">last update: <%= thread.date_of_newest_entry.to_s(:long) %></span>
+                    </div>
+                    <div class="message_content">
+                        <%= content_of_newest_threadentry thread.id %>
+                    </div>
                 </td>
             </tr>
         </tbody>

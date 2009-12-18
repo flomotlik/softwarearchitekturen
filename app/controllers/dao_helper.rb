@@ -129,13 +129,24 @@ class DaoHelper
     return tmp_threads
   end
   
+  # Delivers same objects as find_threads_by_userid, but ordered by 
+  # the creation date of any contained entries
+  def find_threads_by_userid_orderby_newest_entries(user_id)
+    threads = self.find_threads_by_userid user_id
+    for thread in threads do
+      newest_entry = self.find_newest_entry_for_thread thread.id
+      thread.date_of_newest_entry = newest_entry.date
+    end
+    threads.sort! { |a, b|  a.date_of_newest_entry <=> b.date_of_newest_entry }
+  end
+  
   def find_users_by_threadid(thread_id)
     key = "UserThreads:Thread" + thread_id.to_s
-    tmp_userthreads = self.check_object(CACHE[key], key) {UserThread.find(:all, :condition => ["private_thread_id = ?", thread_id])}
+    tmp_userthreads = self.check_object(CACHE[key], key) {UserThread.find(:all, :conditions => ["private_thread_id = ?", thread_id])}
     tmp_users = Array.new
     tmp_userthreads.each do |ut|
-      user_key = "User:" + ut.user_id.to_s
-      tmp_user = self.find_user_by_id(user_key)
+      #user_key = "User:" + ut.user_id.to_s
+      tmp_user = self.find_user_by_id(ut.user_id)
       tmp_users.push(tmp_user)
     end
     

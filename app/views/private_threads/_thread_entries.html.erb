@@ -2,9 +2,9 @@
     <% for threadentry in @threadentries
     entry = find_entry threadentry.entry_id
     user = find_user_by_id entry.user_id %>
-    <div class="message">
+    <div class="message" id="threadentry_<%= threadentry.id %>">
         <div>
-            <%= user.login %><span class="meta" style="padding-top: 0!important"><%= entry.date.to_s(:long) %></span>
+            <%= user.login %> <span class="meta" style="padding-top: 0!important">wrote this on <%= entry.date.to_s(:long) %>:</span>
         </div>
         <div class="message_content">
             <%= entry.content %>

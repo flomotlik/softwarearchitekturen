@@ -175,6 +175,12 @@ h1,h2 {
 	margin-bottom: 7px;
 }
 
+h3 {
+	font-weight: normal;
+	font-size: 150%;
+	margin-bottom: 7px;
+}
+
 a, a:link {
 	color:#121212;
 	text-decoration:none;
@@ -254,7 +260,7 @@ a:hover {
 	background:#efefef url(img/first_comment.gif) top left repeat-x;
 }
 
-.input_answer{width: 475px; }
+.input_answer{width: 600px; }
 
 /* FRIENDS ************/
 .friend{
