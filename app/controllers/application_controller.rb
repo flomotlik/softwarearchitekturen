@@ -1,11 +1,14 @@
 # Filters added to this controller apply to all controllers in the application.
 # Likewise, all the methods added will be available for all controllers.
+require 'aquarium'
+include Aquarium::Aspects
 
 class ApplicationController < ActionController::Base
   helper :all # include all helpers, all the time
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
   filter_parameter_logging :password, :password_confirmation
   helper_method :current_user_session, :current_user
+  before_filter :do_aop
   
   # Scrub sensitive parameters from your log
   # filter_parameter_logging :password
@@ -45,4 +48,17 @@ class ApplicationController < ActionController::Base
       redirect_to(session[:return_to] || default)
       session[:return_to] = nil
     end
+    private
+      @@aop_done = false
+
+      def do_aop
+      return if @@aop_done
+
+       Aspect.new :before, :calls_to => :all_methods, :in_types => /Controller$/,
+         :method_options => :exclude_ancestor_methods do |join_point, object, *args|
+         p "After: #{join_point.target_type.name}##{join_point.method_name}: object = #{object}, args = #{args}"
+       end
+
+      @@aop_done = true
+      end
 end
