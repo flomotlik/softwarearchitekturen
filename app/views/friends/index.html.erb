@@ -1,16 +1,24 @@
 <div id="content">
     <div id="left">
         <h2>Friends</h2>
+        <div id="sub_menu">
+            <ul>
+                <li>
+                    <%= link_to 'Add Friends', {:action => :new} %>
+                </li>
+            </ul>
+        </div>
         <div id="friends">
             <% @friends.each do |user| %>
-            <div class="friend" id="friend_1">
+            <div class="friend" id=<%= user.id %>>
                 <div>
-                    <a href="#"><%= user.login %></a><br>
-                    <span class="meta" style="padding-top: 0!important">since: <%= @friendships[0].date %></span>
-					<span class="delete"><a href="#">delete</a></span>
+                    <a href="#"><%= user.login %></a>
+                    <br>
+                    <span class="meta" style="padding-top: 0!important">since: <%= @controller.get_friendship(@currentid, user.id).date %></span>
+                    <span class="delete"><a href="#">block</a></span>
                 </div>
             </div>
-            <%end %>
+            <% end %>
         </div>
     </div>
     <div id="right">

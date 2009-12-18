@@ -1,0 +1,14 @@
+<div id="friends">
+    <% @not_friends_yet.each do |user| %>
+    <div class="friend" id=<%= user.id %>>
+        <div>
+            <%= user.login %>
+            <span class="delete"><% form_remote_tag :url => { :action => "add_friendships"}, :html => {:id => 'new_friendship' } do %>
+                <%= hidden_field_tag(:friend, user.id) %>
+                <%= submit_tag("Add") %>
+                <% end %>
+            </span>
+        </div>
+    </div>
+    <% end %>
+</div>

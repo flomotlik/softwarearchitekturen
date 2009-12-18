@@ -9,3 +9,13 @@ friendship2:
   date: 2009-12-16 09:38:09
   friend: 1
   user_id: 2
+
+friendship3:
+  date: 2009-12-18 09:38:09
+  friend: 3
+  user_id: 1
+  
+friendship4:
+  date: 2009-12-18 09:38:09
+  friend: 1
+  user_id: 3
