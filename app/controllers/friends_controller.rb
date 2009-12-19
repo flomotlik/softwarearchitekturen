@@ -20,7 +20,7 @@ class FriendsController < ApplicationController
     DaoHelper.instance.find_friendship_by_userids(user1, user2)
   end
   
-  def add_friendships ()
+  def add_friendships
     friend_id = params[:friend] 
     now = Time.now
     
