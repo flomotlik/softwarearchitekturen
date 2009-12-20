@@ -1,0 +1,13 @@
+<% form_for(post) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :content %><br />
+    <%= f.text_area :content %>
+  </p>
+  <p>
+		<input id="user_id" name="user_id" type="hidden" value="<%= @user.id %>" />
+		<input id="date" name="date" type="hidden" value="<%=h Time.now.to_i %>" />
+    <%= f.submit 'Create' %>
+  </p>
+<% end %>

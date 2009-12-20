@@ -1,0 +1,60 @@
+<div id="left">
+	
+	<h2>Posts</h2>
+	
+	<div id="poster">
+		<div style="background: #cdcdcd; padding: 11px 7px 13px">
+		<% form_for(@post, :url => { :action => "create" } ) do |f| %>
+		  <%= f.error_messages %>
+		    <%= f.label :content, "what are you doin?" %><br />
+		    <%= f.text_area :content, :cols => 60, :rows => 3 %>
+		  
+			<%	#	<input id="post_user_id" name="post[user_id]" type="hidden" value="<%= @user.id " />
+				#<input id="post_date" name="post[date]" type="hidden" value="<%=h Time.now.to_i " /> %>
+
+		    <%= f.submit 'Save' %>
+		  
+		<% end %>
+		
+		</div>
+	</div>
+	
+	<% @posts.each do |post| %>
+	
+	<div class="post">
+		
+		<div>
+			<%=h post.id %>: <span><%=h post.user_id %></span>&nbsp;<%=h post.content %>
+		</div>
+		<div class="meta">
+			<%=h post.created_at %> | 
+			<a href="#">hide</a> |
+			<%= link_to 'edit',edit_post_path(post) %> | 
+			<%= link_to 'del', post, :confirm => 'Are you sure?', :method => :delete %>
+		</div>
+		<div class="comments">
+			<ul>
+				<li class="first_comment">
+					<%# render :partial => post.comments %>
+				</li>
+				<li>
+					<p>
+						<form action="#" method="get">
+							<input type="text" value="" name="comment" class="input_comment" />
+							<input type="submit" value="comment" />
+						</form>											
+					</p>
+				</li>
+			</ul>
+			
+			
+		
+		</div>	
+	</div>
+	
+	<% end %>
+	
+</div>
+<div id="right">
+	right
+</div>
