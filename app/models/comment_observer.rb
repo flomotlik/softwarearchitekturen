@@ -1,4 +1,5 @@
 require 'activemessaging/processor'
+#require_dependency 'app/mq/payload'
 class CommentObserver < ActiveRecord::Observer
   include ActiveMessaging::MessageSender
   observe Comment
