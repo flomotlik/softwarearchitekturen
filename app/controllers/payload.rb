@@ -1,8 +1,8 @@
 class Payload
-  attr_accessor :id, :type
+  attr_accessor :id, :kind
   
   def initialize(params)
     @id = params[:id]
-    @type = params[:type]
+    @kind = params[:kind]
   end
 end

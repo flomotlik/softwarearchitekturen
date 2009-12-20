@@ -68,12 +68,33 @@ class DaoHelper
   ##Can we delete user friendships?
   ##Can we update them?
   
-  def save_userpost(post)
-    userposts = self.find_userposts_by_userid(post.user_id)
-    userposts.push(post)
-    self.save_object(userposts) {"UserPosts:" + post.user_id.to_s}
+  ## POSTS
+  ## save
+  def save_post(post)
+    return self.save_object(post) {"Post:" + post.id.to_s}
   end
   
+  def save_userpost(saved_post )
+    user_post = UserPost.new
+    user_post.post_id = saved_post.id
+    user_post.user_id = saved_post.user_id
+    user_post.save
+    user_post_mem_key = "UserPosts:User:" + saved_post.user_id.to_s
+    CACHE.delete(user_post_mem_key)
+    
+    # userposts = self.find_userposts_by_userid(post.user_id)
+    # userposts.push(post)
+    # self.save_object(userposts) {"UserPosts:" + post.user_id.to_s}
+  end
+  
+  # saves user_post and post
+  def save_new_post(post)
+    post.date = Time.now
+    saved_post = self.save_post(post)
+    self.save_userpost(saved_post)
+  end
+  
+  ## find
   def find_userposts_by_userid(user_id)
     key = "UserPosts:User:" + user_id.to_s
     return self.check_object(CACHE[key], key) {UserPost.find(:all, :conditions => ["user_id=?", user_id])}

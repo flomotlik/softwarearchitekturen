@@ -236,15 +236,21 @@ a:hover {
 .meta{ color: #ccc; }
 
 /* COMMENTS ******************/
+
+.comments ul{
+	padding-top: 11px;
+	background:#efefef url(../images/first_comment.gif) top left repeat-x;
+}
+
 .comments li{
 	background: #efefef;
 	padding: 3px 7px 5px;
 	margin: 0 0 3px;
 }
-.comments li.first_comment{
+/*.comments li.first_comment{
 	padding-top: 15px;
 	background:#efefef url(img/first_comment.gif) top left repeat-x;
-}
+}*/
 .comments p{
 	padding: 0;
 	margin: 1px 0 3px;
