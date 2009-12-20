@@ -6,7 +6,9 @@ class CommentObserver < ActiveRecord::Observer
   publishes_to :notify_queue
   
   def after_save(comment)
-    payload = YAML.dump(Paload.new(:id => comment.id, :type => "comment"))
-    publish :notify_queue, payload
+    #TODO: raise exception if smthg goes wrong
+    
+    #payload = YAML.dump(Payload.new(:id => comment.id, :type => "comment"))
+    #publish :notify_queue, payload
   end
 end
