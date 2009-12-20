@@ -44,7 +44,7 @@
 		</div>
 	
 		<div id="content">
-			<% if flash[:notice] %><div class="flash"><%= flash[:notice] %></div><%end%>
+			<%= render :partial => 'layouts/flash', :object => flash %>
 			<%= yield %>
 				
 			
