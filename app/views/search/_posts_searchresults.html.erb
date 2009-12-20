@@ -2,7 +2,9 @@
     <% if @posts
     for post in @posts
     user_post = find_userpost_by_post_id post.id
-    user = find_user_by_id user_post.user_id %>
+    if user_post
+    user = find_user_by_id user_post.user_id
+    %>
     Content: <%= post.content %>, Posting user: <%= user.login %>
-    <% end end %>
+    <% end end end %>
 </div>

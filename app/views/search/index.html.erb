@@ -2,7 +2,7 @@
     <h2>Search in posts</h2>
     <% form_remote_tag :url => { :action => "search" }, :html => {:id => 'search_form' } do %>
     <div id="search_userlist">
-        Involved users:
+        Filter by users:
         <br>
         <% for friend in @friends %>
         <%= check_box_tag 'users_to_search[]', friend.id %>

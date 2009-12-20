@@ -11,8 +11,21 @@ class SearchController < ApplicationController
   end
   
   def search
+    @error_occurred = false
     @searchquery = params[:query][:searchquery]
+    if !@searchquery || @searchquery == ''
+      flash[:notice] = "Please enter a search string!"
+      @error_occurred = true
+      respond_to do |format|
+        format.html { redirect_to :action => :index }
+        format.js
+      end
+      return
+    end
     user_ids = params[:users_to_search]
+    if !user_ids
+      user_ids = DaoHelper.instance.find_friends_by_userid current_user.id
+    end
     @posts = DaoHelper.instance.search_posts_by_content(@searchquery,user_ids)
   end
   
