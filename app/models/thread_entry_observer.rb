@@ -15,6 +15,6 @@ class ThreadEntryObserver < ActiveRecord::Observer
     #payload = Marshal.dump(Payload.new(:id => threadEntry.id, :kind => "threadEntry"))
     #payload = Payload.new(:id => threadEntry.id, :type => "threadEntry")
     #publish :notify_queue, "test3"
-    publish :notify_queue, payload
+    #publish :notify_queue, payload
   end
 end

@@ -1,4 +1,4 @@
-if @error_occurred
+if @error_occurred == true
   page.replace_html :notice, :partial => 'layouts/flash', :object => flash
   flash.discard
 else

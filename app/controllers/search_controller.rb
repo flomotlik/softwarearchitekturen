@@ -12,7 +12,7 @@ class SearchController < ApplicationController
   
   def search
     @error_occurred = false
-    @searchquery = params[:query][:searchquery]
+    @searchquery = params[:query][:querystring]
     if !@searchquery || @searchquery == ''
       flash[:notice] = "Please enter a search string!"
       @error_occurred = true
