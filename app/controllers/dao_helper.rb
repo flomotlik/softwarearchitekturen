@@ -41,6 +41,8 @@ class DaoHelper
     return self.check_object(CACHE[key], key) {Friendship.find(:all, :conditions => ["user_id = ?", user_id])}
   end
   
+
+  
   def find_friendship_by_userids(user1, user2)
     friendship = Friendship.find(:first, :conditions => ["user_id = ? AND friend = ?", user1, user2]) 
     
@@ -73,8 +75,13 @@ class DaoHelper
   end
   
   def find_userposts_by_userid(user_id)
-    key = "UserPosts:" + user_id.to_s
+    key = "UserPosts:User:" + user_id.to_s
     return self.check_object(CACHE[key], key) {UserPost.find(:all, :conditions => ["user_id=?", user_id])}
+  end
+  
+  def find_userpost_by_post_id(post_id)
+    key = "UserPost:PublicPost:" + post_id.to_s
+    return self.check_object(CACHE[key], key) {UserPost.find(:first, :conditions => ["post_id = ?", post_id])}
   end
   
   def find_publicposts_by_userid(user_id)
@@ -219,6 +226,28 @@ class DaoHelper
       CACHE.delete(user_thread_mem_key)
     end
     self.add_new_entry_to_thread entry, thread_entry, private_thread, adding_user
+  end
+  
+  def search_posts_by_content(content, user_ids)
+    results = Array.new
+    for user_id in user_ids
+      userposts = find_userposts_by_userid user_id
+      for userpost in userposts
+        post = find_publicpost_by_id userpost.post_id
+        hit = post.content.include? content
+        if hit == true
+          results.push post
+        end
+      end
+    end
+    #return Post.find :all, :joins=>:user_post, :conditions => ["posts.content LIKE '%?%'", content]
+    #['user_posts.user_id IN ?', user_ids]
+  end
+  
+  def search_comments_by_content(content, user_ids)
+    
+    key = "Comment:" + comment.id.to_s
+    self.self.check_object(CACHE[key], key) {Comment.find(thread_id)}
   end
   
   ### helper methods ###

@@ -1,0 +1,9 @@
+if @error_occurred
+  page.replace_html :notice, :partial => 'layouts/flash', :object => flash
+  flash.discard
+else
+  page.replace_html :notice, :partial => 'layouts/flash', :object => flash
+  page.replace_html :posts_searchresults, :partial => 'posts_searchresults', :object => @posts
+  #page.visual_effect :highlight, @added_entry_div, :duration=>2
+  #page[:new_thread_entry].reset
+end

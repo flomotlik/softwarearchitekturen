@@ -198,6 +198,23 @@ a:hover {
 	font-size: 92.5%;
 }
 
+#search_userlist{
+	float:left;
+	margin: 5px;
+	position:relative;
+	width:100px;
+}
+
+#search_main{
+	float:left;
+	position:relative;
+	width:490px;
+}
+
+.search_user{text-decoration: underline;}
+
+.input_search{width: 500px; }
+
 /* POSTS ******************/
 #poster{
 	border-bottom: 1px solid #999;

@@ -20,8 +20,9 @@
 					<li class="menu_list"><%= link_to "Register", new_account_path %></li>
 				<% else %>
 				  	<li class="menu_list"><span>HOME</span></li>
-					<li class="menu_list"><%= link_to "MESSAGES", private_threads_path %> <span>3</span></a></li>
+					<li class="menu_list"><%= link_to "MESSAGES", private_threads_path %></a></li>
 					<li class="menu_list"><%= link_to "FRIENDS", friends_path %></li>
+					<li class="menu_list"><%= link_to image_tag("search.png", :border=>0), {:controller => :search, :action => :index} %></li>
 				<% end %>
 				</ul>
 				

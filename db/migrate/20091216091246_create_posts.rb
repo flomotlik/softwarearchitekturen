@@ -3,7 +3,7 @@ class CreatePosts < ActiveRecord::Migration
     create_table :posts do |t|
       t.text :content
       t.timestamp :date
-      t.decimal :user_id
+      t.references :user_post
 
       t.timestamps
     end
