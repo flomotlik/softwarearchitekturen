@@ -10,6 +10,7 @@ require_dependency 'user_post'
 require_dependency 'post'
 require_dependency 'post_comment'
 require_dependency 'notification'
+require_dependency 'user_block'
 
 class DaoHelper
   include Singleton
@@ -150,15 +151,13 @@ class DaoHelper
   end
   
   def save_userblock(userblock)
-    userblocks = self.find_userblocks_by_userid(userblock.user_id)
-    userblocks.push(userblock)
-    self.save_object(userblocks) {"Userblocks:" + user_id.to_s}
+    userblock.save
+    CACHE.delete("Userblocks:" + userblock.user_id.to_s)
   end
   
   def delete_userblock(userblock)
     userblocks = self.find_userblocks_by_userid(userblock.user_id)
-    userblocks.delete(userblock)
-    UserBlock.delete(:all, :condition => ["user_id= ? AND blocked_id = ?", userblock.user_id, userblock.blocked_id])
+    UserBlock.delete_all("user_id = " + userblock.user_id.to_s + " AND blocked_id = " + userblock.blocked_id.to_s)
     CACHE.delete("Userblocks:" + userblock.user_id.to_s)
   end
   

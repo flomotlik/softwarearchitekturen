@@ -1,0 +1,24 @@
+<div id="friends">
+    <% @friends.each do |user| %>
+    <div class="friend" id="user:"<%= user.id %>>
+        <div>
+            <a href="#"><%= user.login %></a>
+            <br>
+            <span class="meta" style="padding-top: 0!important">since: <%= @controller.get_friendship(@controller.get_currentusers_id, user.id).date %></span>
+            <% if @controller.is_friend_blocked(user.id) %>
+            <span class="delete">
+            <% form_remote_tag :url => { :action => "unblock_friend"}, :html => {:id => 'block_friendship' } do %>
+            <%= hidden_field_tag(:friend, user.id) %>
+            <%= submit_tag("unblock") %>
+            <% end %>
+            <% else %>
+            <span class="delete"><% form_remote_tag :url => { :action => "block_friend"}, :html => {:id => 'block_friendship' } do %>
+                <%= hidden_field_tag(:friend, user.id) %>
+                <%= submit_tag("block") %>
+                <% end %>
+            </span>
+            <% end %>
+        </div>
+    </div>
+    <% end %>
+</div>
