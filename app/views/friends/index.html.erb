@@ -8,18 +8,7 @@
                 </li>
             </ul>
         </div>
-        <div id="friends">
-            <% @friends.each do |user| %>
-            <div class="friend" id=<%= user.id %>>
-                <div>
-                    <a href="#"><%= user.login %></a>
-                    <br>
-                    <span class="meta" style="padding-top: 0!important">since: <%= @controller.get_friendship(@currentid, user.id).date %></span>
-                    <span class="delete"><a href="#">block</a></span>
-                </div>
-            </div>
-            <% end %>
-        </div>
+        <%= render :partial => 'friendships' %>
     </div>
     <div id="right">
         right
