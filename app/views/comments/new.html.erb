@@ -1,0 +1,24 @@
+
+<div id="left">
+<h1>New Comment for</h1>
+
+<div>
+	<% user_post = self.find_user_by_id(@currentpost.user_id)%>
+	<p><strong><%=h user_post.login %></strong>&nbsp;<%=h @currentpost.content %></p>
+</div>
+
+
+<div class="comments">
+	<ul>
+		<li>
+<% form_for(@comment, :url => { :controller => "comments", :action => "create" } ) do |cf| %>
+  <%= cf.error_messages %>
+    <%#= f.label :content, "comment" %><br />
+    <%= cf.text_area :content, :cols => 60, :rows => 3%>
+    <%= cf.submit 'comment' %>
+<% end %>
+		</li>
+	</ul>
+
+<%= link_to 'Back', posts_path %>
+</div>	

@@ -1,6 +1,6 @@
 class PostsController < ApplicationController
   
-  #helper_method :save_new_post, :find_userposts_by_userid
+  helper_method :find_comment_by_id, :find_user_by_id
   
   def index
     
@@ -8,10 +8,15 @@ class PostsController < ApplicationController
     currentuserid = @currentuser.id
     
     @post = Post.new
+    @comment = Comment.new
     
     @posts = find_all_posts_by_userid(currentuserid)
     
-    #@post = Post.new(params[:post])
+    #@comments = find_all_comments_by 
+    
+    #@posts.each do |post|
+      #@posts.comments = DaoHelper.instance.find_postcomment_by_postid(post.id)
+    #end
     
     respond_to do |format|
       format.html # index.html.erb
@@ -23,6 +28,13 @@ class PostsController < ApplicationController
     return DaoHelper.instance.find_all_posts_by_userid(currentuserid)
   end
   
+  def find_comment_by_id(post_id)
+    return DaoHelper.instance.find_comment_by_id(post_id)
+  end
+  
+  def find_user_by_id(user_id)
+    return DaoHelper.instance.find_user_by_id(user_id)
+  end
   
   # GET /posts/1
   # GET /posts/1.xml

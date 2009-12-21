@@ -15,34 +15,32 @@
 	
 	<% @posts.each do |post| %>
 	
+	<% user_post = self.find_user_by_id(post.user_id) %>
+	
 	<div class="post">
-		
 		<div>
-			<%=h post.id %>: <span><strong>User: <%=h post.user_id %></strong></span>&nbsp;-&nbsp;<%=h post.content %>
+			<span><strong>User: <%=h user_post.login %></strong></span>&nbsp;-&nbsp;<%=h post.content %>
 		</div>
+		
 		<div class="meta">
 			<%=h post.created_at %> | 
-			<a href="#">hide</a> |
-			<%= link_to 'edit',edit_post_path(post) %> | 
-			<%= link_to 'del', post, :confirm => 'Are you sure?', :method => :delete %>
+			<!--><a href="#">hide</a> | -->
+			<%#= link_to 'edit',edit_post_path(post) %>
+			<%#= link_to 'del', post, :confirm => 'Are you sure?', :method => :delete %>
+			<a href="/posts/<%= post.id %>/comments/new">new comment</a>
 		</div>
 		<div class="comments">
 			<ul>
-				<li class="first_comment">
-					<%# @TODO render :partial => comments %>
-				</li>
+				<% post.post_comment.each do |comment| %>
 				<li>
-					<p>
-						<form action="#" method="get">
-							<input type="text" value="" name="comment" class="input_comment" />
-							<input type="submit" value="comment" />
-						</form>											
-					</p>
+					<% comment = self.find_comment_by_id(comment.post_id) %>
+					<% user_comment = self.find_user_by_id(comment.user_id) %>
+					<p><strong><%= user_comment.login %></strong>&nbsp;<%= comment.content %></p>
+					<p class="meta"><%= comment.date %></p>
 				</li>
+				<% end %>
 			</ul>
 			
-			
-		
 		</div>	
 	</div>
 	

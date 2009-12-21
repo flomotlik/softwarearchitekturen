@@ -245,7 +245,8 @@ a:hover {
 .comments li{
 	background: #efefef;
 	padding: 3px 7px 5px;
-	margin: 0 0 3px;
+	border-bottom: 3px solid #fff;
+	margin: 0 0 1px;
 }
 /*.comments li.first_comment{
 	padding-top: 15px;
