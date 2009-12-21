@@ -1,8 +1,6 @@
 class NotificationController < ApplicationController
-  def index
-    @notifications = Notification.find(:all)
-    n = Notification.create(:reason => "comment", :user_id => 1)
-    @saved = n.save
-    @errors = n.errors
+  def show
+    @notifications = Notification.find_all_by_user_id(1)
+    render :partial => "notification/show"
   end
 end

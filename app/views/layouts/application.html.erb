@@ -55,6 +55,8 @@
                             <%= link_to "My Account", account_path %>
                         </li>
                     </ul>
+                    <%= periodically_call_remote(:url => { :controller=> 'notification', :action => 'show'},
+                    :update => { :success => "notifications"} ) %>
                     <% end %>
                 </div>
                 <br style="clear: all;"/>
@@ -62,6 +64,8 @@
             <div id="content">
                 <%= render :partial => 'layouts/flash', :object => flash %>
                 <%= yield %>
+            </div>
+            <div id="notifications">
             </div>
             <br style="clear:both"/>
             <div id="footer">
