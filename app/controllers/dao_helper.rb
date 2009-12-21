@@ -9,6 +9,7 @@ require_dependency 'comment'
 require_dependency 'user_post'
 require_dependency 'post'
 require_dependency 'post_comment'
+require_dependency 'notification'
 
 class DaoHelper
   include Singleton
@@ -50,7 +51,7 @@ class DaoHelper
   
   def find_notifications_by_userid(user_id)
     key = "Notifications:" + user_id.to_s
-    return self.check_object(CACHE[key], key) {Notification.find (:all, :conditions => ["user_id = ?", user_id])}
+    return self.check_object(CACHE[key], key) {Notification.find(:all, :conditions => ["user_id = ?", user_id])}
   end
   
   def save_notification(n)
