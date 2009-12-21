@@ -1,9 +1,9 @@
 Short Howto
 Florian Motlik  - 0425525 - diagramme, users, notifications
-Filip Hianik    -         - mq, batch processing
-Manuel Maly     -         - diagramme, ADs, searching, private threads
-Alexander Maier -         - posts, Layout
-Petar Petrov    -         - friendships, ADs
+Filip Hianik    - 0426173 - mq, batch processing
+Manuel Maly     - 0526121 - diagramme, ADs, searching, private threads
+Alexander Maier - 0027217 - posts, Layout
+Petar Petrov    - 0508142 - DAO+memcache, friendships, ADs
 
 --- Start Server ---
 1) Reset Database:
