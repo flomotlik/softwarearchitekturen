@@ -1,20 +1,15 @@
 class PostsController < ApplicationController
   
-  helper_method :save_new_post, :find_userposts_by_userid
-  
-  #DAO = DaoHelper.instance
+  #helper_method :save_new_post, :find_userposts_by_userid
   
   def index
     
-    @user = current_user
-    @user_id = current_user.id
     @currentuser = current_user
     currentuserid = @currentuser.id
-    @date = Time.now.to_i
     
     @post = Post.new
-    @posts = Post.all
-    @posts = DaoHelper.instance.find_userposts_by_userid(currentuserid)
+    
+    @posts = find_all_posts_by_userid(currentuserid)
     
     #@post = Post.new(params[:post])
     
@@ -23,6 +18,11 @@ class PostsController < ApplicationController
       format.xml  { render :xml => @posts }
     end
   end
+  
+  def find_all_posts_by_userid(currentuserid)
+    return DaoHelper.instance.find_all_posts_by_userid(currentuserid)
+  end
+  
   
   # GET /posts/1
   # GET /posts/1.xml

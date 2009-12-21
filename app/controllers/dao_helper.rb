@@ -100,23 +100,43 @@ class DaoHelper
     return self.check_object(CACHE[key], key) {UserPost.find(:all, :conditions => ["user_id=?", user_id])}
   end
   
-  def find_userpost_by_post_id(post_id)
-    key = "UserPost:PublicPost:" + post_id.to_s
-    return self.check_object(CACHE[key], key) {UserPost.find(:first, :conditions => ["post_id = ?", post_id])}
+  def find_post_by_id(post_id)
+    key = "Post:" + post_id.to_s
+    return self.check_object(CACHE[key], key) {Post.find(post_id)}
   end
   
-  def find_publicposts_by_userid(user_id)
-    userposts = self.find_userposts_by_userid(user_id)
+  def find_posts_by_userid(user_id)
+    user_posts = self.find_userposts_by_userid(user_id)
+    
     posts = Array.new
-    userposts.each do |p|
-      posts.push(self.find_publicpost_by_id(p.post_id))
-    end
+    user_posts.each do |p|
+      posts.push(self.find_post_by_id(p.post_id))
+    end    
+    return posts
   end
   
-  def find_publicpost_by_id(post_id)
-    key = "PublicPost:" + post_id.to_s
-    return self.check_object(CACHE[key], key) {PublicPost.find(post_id)}
+  def find_friends_posts_by_userid(user_id)
+    friendships = self.find_friendships_by_userid(user_id)
+    
+    posts = Array.new
+    friendships.each do |friendship|
+      posts = self.find_posts_by_userid(friendship.friend)
+    end
+    
+    return posts
   end
+  
+  ## lists all posts
+  def find_all_posts_by_userid(user_id)
+    user_posts = self.find_posts_by_userid(user_id)
+    friends_posts = self.find_friends_posts_by_userid(user_id) 
+    
+    all_posts = user_posts + friends_posts
+    
+    return all_posts.sort! { |a, b|  b.date <=> a.date }
+  end
+  
+  #####
   
   def save_comment(comment)
     self.save_object(comment) {"Comment:" + comment.id.to_s}

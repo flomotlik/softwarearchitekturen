@@ -1,5 +1,4 @@
 <div id="left">
-	
 	<h2>Posts</h2>
 	
 	<div id="poster">
@@ -8,12 +7,7 @@
 		  <%= f.error_messages %>
 		    <%= f.label :content, "what are you doin?" %><br />
 		    <%= f.text_area :content, :cols => 60, :rows => 3 %>
-		  
-			<%	#	<input id="post_user_id" name="post[user_id]" type="hidden" value="<%= @user.id " />
-				#<input id="post_date" name="post[date]" type="hidden" value="<%=h Time.now.to_i " /> %>
-
 		    <%= f.submit 'Save' %>
-		  
 		<% end %>
 		
 		</div>
@@ -24,7 +18,7 @@
 	<div class="post">
 		
 		<div>
-			<%=h post.id %>: <span><%=h post.user_id %></span>&nbsp;<%=h post.content %>
+			<%=h post.id %>: <span><strong>User: <%=h post.user_id %></strong></span>&nbsp;-&nbsp;<%=h post.content %>
 		</div>
 		<div class="meta">
 			<%=h post.created_at %> | 
@@ -35,7 +29,7 @@
 		<div class="comments">
 			<ul>
 				<li class="first_comment">
-					<%# render :partial => post.comments %>
+					<%# @TODO render :partial => comments %>
 				</li>
 				<li>
 					<p>
