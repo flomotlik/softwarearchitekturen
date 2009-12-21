@@ -48,18 +48,24 @@ class DaoHelper
     User.delete(user_id)
   end
   
+  def find_notifications_by_userid(user_id)
+    key = "Notifications:" + user_id.to_s
+    return self.check_object(CACHE[key], key) {Notification.find (:all, :conditions => ["user_id = ?", user_id])}
+  end
+  
+  def save_notification(n)
+    n.save
+    CACHE.delete("Notifications:" + n.user_id.to_s)
+  end
+  
   def find_friendships_by_userid(user_id)
     key = "Friendships:" + user_id.to_s
     return self.check_object(CACHE[key], key) {Friendship.find(:all, :conditions => ["user_id = ?", user_id])}
   end
   
-  
-  
   def find_friendship_by_userids(user1, user2)
     friendship = Friendship.find(:first, :conditions => ["user_id = ? AND friend = ?", user1, user2]) 
-    
   end
-  
   
   def find_friends_by_userid(user_id)
     friendships = self.find_friendships_by_userid(user_id)
@@ -148,12 +154,11 @@ class DaoHelper
     self.save_object(userblocks) {"Userblocks:" + user_id.to_s}
   end
   
-  #INSPECT
   def delete_userblock(userblock)
     userblocks = self.find_userblocks_by_userid(userblock.user_id)
     userblocks.delete(userblock)
     UserBlock.delete(:all, :condition => ["user_id= ? AND blocked_id = ?", userblock.user_id, userblock.blocked_id])
-    self.save_object(userblocks)
+    CACHE.delete("Userblocks:" + userblock.user_id.to_s)
   end
   
   def find_userblocks_by_userid(user_id)
