@@ -65,9 +65,8 @@
                 <%= render :partial => 'layouts/flash', :object => flash %>
                 <%= yield %>
             </div>
-			<h2>Notifications</h2>
-            <div id="notifications">
-            </div>
+            <h2>Notifications</h2>
+            <%= render :partial => 'notification/show', :locals => { :notifications => DaoHelper.instance.find_notifications_by_userid(current_user.id) } %>
             <br style="clear:both"/>
             <div id="footer">
                 <div>
