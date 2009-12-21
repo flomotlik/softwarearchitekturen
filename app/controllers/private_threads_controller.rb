@@ -95,6 +95,7 @@ class PrivateThreadsController < ApplicationController
       new_entry = Entry.new(params[:newentry])
       Entry.transaction do
         DaoHelper.instance.save_new_thread new_entry, new_thread_entry, new_thread, current_user, new_thread_receivers_ids
+        save_success = true
       end
     rescue
       general_success = false
