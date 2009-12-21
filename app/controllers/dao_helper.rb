@@ -115,8 +115,10 @@ class DaoHelper
   # saves user_post and post
   def save_new_post(post)
     post.date = Time.now
-    saved_post = self.save_post(post)
-    self.save_userpost(saved_post)
+    post.transaction do
+      saved_post = self.save_post(post)
+      self.save_userpost(saved_post)
+    end
   end
   
   ## find
@@ -304,12 +306,13 @@ class DaoHelper
   def add_new_entry_to_thread(entry, thread_entry, private_thread, adding_user)
     entry.user_id = adding_user.id
     entry.date = Time.now
-    saved_entry = self.save_entry(entry)
-    thread_entry.entry_id = saved_entry.id
-    thread_entry.thread_id = private_thread.id
-    thread_entry.date = Time.now
-    saved_thread_entry = self.save_thread_entry(thread_entry)
-    
+    entry.transaction do
+      saved_entry = self.save_entry(entry)
+      thread_entry.entry_id = saved_entry.id
+      thread_entry.thread_id = private_thread.id
+      thread_entry.date = Time.now
+      saved_thread_entry = self.save_thread_entry(thread_entry)
+    end
     thread_mem_key = "ThreadEntry:PrivateThread:" + private_thread.id.to_s
     CACHE.delete(thread_mem_key)
   end
@@ -319,17 +322,19 @@ class DaoHelper
   def save_new_thread(entry, thread_entry, private_thread, adding_user, receiving_users_ids)
     private_thread.date = Time.now
     private_thread.author_user_id = adding_user
-    saved_thread = save_private_thread private_thread
-    receiving_users_ids.push adding_user.id
-    for receiving_user_id in receiving_users_ids do
-      user_thread = UserThread.new 
-      user_thread.private_thread_id = saved_thread.id
-      user_thread.user_id = receiving_user_id
-      user_thread.save
-      user_thread_mem_key = "UserThreads:User:" + receiving_user_id.to_s
-      CACHE.delete(user_thread_mem_key)
+    private_thread.transaction do
+      saved_thread = save_private_thread private_thread
+      receiving_users_ids.push adding_user.id
+      for receiving_user_id in receiving_users_ids do
+        user_thread = UserThread.new 
+        user_thread.private_thread_id = saved_thread.id
+        user_thread.user_id = receiving_user_id
+        user_thread.save
+        user_thread_mem_key = "UserThreads:User:" + receiving_user_id.to_s
+        CACHE.delete(user_thread_mem_key)
+      end
+      self.add_new_entry_to_thread entry, thread_entry, private_thread, adding_user
     end
-    self.add_new_entry_to_thread entry, thread_entry, private_thread, adding_user
   end
   
   def search_posts_by_content(content, user_ids)

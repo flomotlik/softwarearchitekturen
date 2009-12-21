@@ -27,15 +27,17 @@ class NotifyQueueProcessor < ApplicationProcessor
     for user in users
       if user.id != entry.user_id
         n = Notification.new(:reason => "thread_entry", :user_id => user.id, :date => Time.new , :object_id => threadId.to_i)
-        DaoHelper.instance.save_notification(n)
         un = UserNotification.new(:user_id => user.id, :notification_id => n.id)
-        DaoHelper.instance.save_user_notification(un)
+        n.transaction do
+          DaoHelper.instance.save_notification(n)        
+          DaoHelper.instance.save_user_notification(un)
+        end
       end
     end
   
   end
   
-  def notifyComment(param)
-   puts param
+  def notifyComment(commentId)
+   puts commentId
   end
 end
