@@ -254,6 +254,11 @@ class DaoHelper
     return self.check_object(CACHE[key], key) {Entry.find(entry_id)}
   end
   
+  def find_entries_by_userid(user_id)
+    key = "Entries:User:" + user_id.to_s
+    return self.check_object(CACHE[key], key) {Entry.find :all, :conditions => ["user_id = ?", user_id]}
+  end
+  
   def save_entry(entry)
     return self.save_object(entry) {"Entry:" + entry.id.to_s}
   end
@@ -335,6 +340,23 @@ class DaoHelper
         hit = comment.content.include? content
         logger.debug "which is hit: " + hit.to_s
         if hit == true
+          results.push comment
+        end 
+      end
+    end
+    return results
+  end
+  
+  def search_entries_by_content(content, user_ids,logger)
+    results = []
+    for user_id in user_ids
+      logger.debug "Retrieving entries for user " + user_id.to_s
+      entries = find_entries_by_userid user_id.to_s
+      for entry in entries
+        logger.debug "Entry found: " + entry.content + ", from user " + entry.user_id.to_s
+        hit = entry.content.include? content
+        logger.debug "which is hit: " + hit.to_s
+        if hit == true
           comment_tuple = []
           comment_tuple.push comment
           parentpost = find_post_by_commentid comment.id
@@ -348,9 +370,34 @@ class DaoHelper
       end
     end
     return results
-  end
+  end  
   
+  def search_entries_by_content(content, user_ids,logger)
+    results = []
+    for user_id in user_ids
+      logger.debug "Retrieving entries for user " + user_id.to_s
+      entries = find_entries_by_userid user_id.to_s
+      for entry in entries
+        logger.debug "Entry found: " + entry.content + ", from user " + entry.user_id.to_s
+        hit = entry.content.include? content
+        logger.debug "which is hit: " + hit.to_s
+        if hit == true
+          comment_tuple = []
+          comment_tuple.push comment
+          parentpost = find_post_by_commentid comment.id
+          comment_tuple.push parentpost
+          results.push comment_tuple
+          
+          logger.debug "should be comment: " + comment_tuple[0].to_s
+          logger.debug "should be post: " + comment_tuple[1].to_s
+          
+        end 
+      end
+    end
+    return results
+  end  
   
+
   ### helper methods ###
   def check_object(object, key)
     if object == nil
