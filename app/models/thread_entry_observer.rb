@@ -13,11 +13,11 @@ class ThreadEntryObserver < ActiveRecord::Observer
     #un = YAML.load(payload)
     #puts un.kind
 
-    payload = threadEntry.id.to_s + "!threadEntry" 
+    payload = threadEntry.id.to_s + "!thread_entry" + "\n"
     #Marshal
     #payload = Marshal.dump(Payload.new(:id => threadEntry.id, :kind => "threadEntry"))
     #payload = Payload.new(:id => threadEntry.id, :type => "threadEntry")
     #publish :notify_queue, "test3"
-    #publish :notify_queue, payload
+    publish :notify_queue, payload
   end
 end
