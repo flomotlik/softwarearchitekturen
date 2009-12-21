@@ -9,7 +9,7 @@ class ThreadEntryObserver < ActiveRecord::Observer
   def after_save(threadEntry)
     #TODO: raise exception if smthg goes wrong
     #YAML
-    #payload = YAML.dump(Payload.new(:id => threadEntry.id, :kind => "threadEntry"))
+    #payload = YAML.dump(Payload.new(:id => threadEntry.id, :kind => "thread_entry"))
     #un = YAML.load(payload)
     #puts un.kind
 

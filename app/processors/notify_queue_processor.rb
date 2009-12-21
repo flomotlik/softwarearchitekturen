@@ -7,10 +7,24 @@ class NotifyQueueProcessor < ApplicationProcessor
     #payload = YAML.load(message)
     #Marshal
     #payload = Marshal.load(message)
+    #puts message
     #puts "received: " + payload.kind
-    puts "received: " + message
+    params = message.split('!')
+    if params[1] == "comment"
+      notifyComment(params[0])
+    else
+      notifyThreadEntry(params[0])
+    end
     
     #TODO: Deserialized object can not be accessed?! Uncomment next line to see.
     #puts "rec" + payload.kind + "rec"
+  end
+  
+  def notifyThreadEntry(param)
+    puts param
+  end
+  
+  def notifyComment(param)
+   puts param
   end
 end
