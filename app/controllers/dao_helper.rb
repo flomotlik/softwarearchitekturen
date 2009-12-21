@@ -424,6 +424,27 @@ class DaoHelper
     return results
   end  
 
+  def search_entries_by_content(content, user_ids,logger)
+    results = []
+    for user_id in user_ids
+      logger.debug "Retrieving entries for user " + user_id.to_s
+      entries = find_entries_by_userid user_id.to_s
+      for entry in entries
+        logger.debug "Entry found: " + entry.content + ", from user " + entry.user_id.to_s
+        hit = entry.content.include? content
+        logger.debug "which is hit: " + hit.to_s
+        if hit == true
+          results.push entry
+        end 
+      end
+    end
+    return results
+  end  
+  
+  def find_entries_by_userid(user_id)
+    key = "Entries:User:" + user_id.to_s
+    return self.check_object(CACHE[key], key) {Entry.find :all, :conditions => ["user_id = ?", user_id]}
+  end
   
   ### helper methods ###
   def check_object(object, key)
