@@ -37,17 +37,37 @@ class PrivateThreadsController < ApplicationController
   end
   
   def add_entry_to_thread
-    new_entry_params = params[:newentry]
-    new_entry = Entry.new new_entry_params
-    new_thread_entry = ThreadEntry.new
-    @currentthread = DaoHelper.instance.find_thread params[:thread_id]
-    DaoHelper.instance.add_new_entry_to_thread new_entry, new_thread_entry, @currentthread, current_user
-    @threadentries = DaoHelper.instance.find_thread_entries_by_threadid params[:thread_id]
-    @added_entry_div = 'threadentry_' + new_thread_entry.id.to_s
-    respond_to do |format|
-      format.html { redirect_to :action => "show", :id => params[:thread_id] }
-      format.js
+    save_success = false
+    general_success = true
+    @error_occurred = false
+    begin
+      new_entry_params = params[:newentry]
+      new_entry = Entry.new new_entry_params
+      new_thread_entry = ThreadEntry.new
+      
+      @currentthread = DaoHelper.instance.find_thread params[:thread_id]
+      Entry.transaction do
+        DaoHelper.instance.add_new_entry_to_thread new_entry, new_thread_entry, @currentthread, current_user
+        save_success = true
+      end
+      @threadentries = DaoHelper.instance.find_thread_entries_by_threadid params[:thread_id]
+      @added_entry_div = 'threadentry_' + new_thread_entry.id.to_s
+    rescue
+      general_success = false
+    ensure
+      if save_success == false
+        @error_occurred = true
+        flash[:notice] = "Your answer could not be saved - please retry!"
+      elsif general_success == false
+        @error_occurred = true
+        flash[:notice] = "An unknown error occurred - please refresh the page!"
+      end
+      respond_to do |format|
+        format.html { redirect_to :action => "show", :id => params[:thread_id] }
+        format.js
+      end
     end
+    
   end
   
   def content_of_newest_threadentry(thread_id)
@@ -65,18 +85,36 @@ class PrivateThreadsController < ApplicationController
   
   #Save a new thread (new has to be called before)
   def saveNew
-    new_thread_receivers_ids = params[:receiving_users]
-    new_thread = PrivateThread.new(params[:newthread])
-    new_thread_entry = ThreadEntry.new
-    new_entry = Entry.new(params[:newentry])
-    DaoHelper.instance.save_new_thread new_entry, new_thread_entry, new_thread, current_user, new_thread_receivers_ids
-    redirect_to :action => "index"
+    save_success = false
+    general_success = true
+    @error_occurred = false
+    begin
+      new_thread_receivers_ids = params[:receiving_users]
+      new_thread = PrivateThread.new(params[:newthread])
+      new_thread_entry = ThreadEntry.new
+      new_entry = Entry.new(params[:newentry])
+      Entry.transaction do
+        DaoHelper.instance.save_new_thread new_entry, new_thread_entry, new_thread, current_user, new_thread_receivers_ids
+        save_success = true
+      end
+    rescue
+      general_success = false
+    ensure
+      if save_success == false
+        @error_occurred = true
+        flash[:notice] = "Your message could not be saved - please retry!"
+      elsif general_success == false
+        @error_occurred = true
+        flash[:notice] = "An unknown error occurred - please return to the messages overview and retry!"
+      end
+      
+      if @error_occurred == true
+        redirect_to :action => "new"
+      else
+        redirect_to :action => "index"
+      end
+    end
   end
   
-  def submitToExisting
-  
-  end
-  
- 
   
 end

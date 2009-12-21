@@ -1,7 +1,7 @@
 class CreateUserBlocks < ActiveRecord::Migration
   def self.up
     create_table :user_blocks do |t|
-      t.decimal :blocked_id
+      t.integer :blocked_id
       t.references :user
       t.timestamp :date
 

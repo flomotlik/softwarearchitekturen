@@ -1,7 +1,7 @@
 class CreateUserComments < ActiveRecord::Migration
   def self.up
     create_table :user_comments do |t|
-      t.decimal :comment_id
+      t.integer :comment_id
       t.references :user
 
       t.timestamps

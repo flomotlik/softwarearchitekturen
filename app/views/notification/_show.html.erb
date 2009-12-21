@@ -1,0 +1,14 @@
+<div id="notifications">
+    <% for notification in @notifications %>
+    <ul>
+        <li>
+            <%=notification.date %>- <% case
+            when notification.reason == "comment" %>
+            Someone commented <%= link_to "your post", :controller=> "posts", :action => "show", :id=>notification.object_id %>
+            <%when notification.reason == "thread_entry" %>
+            Someone wrote a&nbsp;<%= link_to "private message", :controller=> "private_threads", :action => "show", :id=>notification.object_id %>
+            <%end %>
+        </li>
+    </ul>
+    <% end %>
+</div>

@@ -3,7 +3,7 @@ class CreateEntries < ActiveRecord::Migration
     create_table :entries do |t|
       t.text :content
       t.timestamp :date
-      t.decimal :user_id
+      t.integer :user_id
 
       t.timestamps
     end

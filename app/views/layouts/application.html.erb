@@ -48,20 +48,15 @@
                     </ul>
                     <% if current_user %>
                     <ul id="menu_right">
-                        <li>
-                            <div id="search">
-                                <form action="#" method="get">
-                                    <input type="text" value="" name="query" id="field_query" /><input type="submit" value="go" />
-                                </form>
-                            </div>
-                        </li>
-                        <li>
+                        <li class="menu_list">
                             <%= link_to "Logout", user_session_path, :method => :delete, :confirm => "Are you sure you want to logout?" %>
                         </li>
-                        <li>
+                        <li class="menu_list">
                             <%= link_to "My Account", account_path %>
                         </li>
                     </ul>
+                    <%= periodically_call_remote(:url => { :controller=> 'notification', :action => 'show'},
+                    :update => { :success => "notifications"} ) %>
                     <% end %>
                 </div>
                 <br style="clear: all;"/>
@@ -69,6 +64,9 @@
             <div id="content">
                 <%= render :partial => 'layouts/flash', :object => flash %>
                 <%= yield %>
+            </div>
+			<h2>Notifications</h2>
+            <div id="notifications">
             </div>
             <br style="clear:both"/>
             <div id="footer">

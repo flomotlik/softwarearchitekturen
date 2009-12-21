@@ -3,7 +3,7 @@ class CreateComments < ActiveRecord::Migration
     create_table :comments do |t|
       t.text :content
       t.timestamp :date
-      t.decimal :user_id
+      t.references :user
 
       t.timestamps
     end

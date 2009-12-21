@@ -1,9 +1,17 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
-#one:
-#  comment_id: 9.99
-#  post: 
-#
-#two:
-#  comment_id: 9.99
-#  post: 
+postcomment1.1:
+  comment_id: 1
+  post_id: 1
+
+postcomment1.2:
+  comment_id: 2
+  post_id: 1
+
+postcomment2.1:
+  comment_id: 3
+  post_id: 2
+
+postcomment2.2:
+  comment_id: 4
+  post_id: 2
