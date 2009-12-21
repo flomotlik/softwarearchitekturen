@@ -17,10 +17,7 @@ test:
 
 production:
   adapter: mysql
-  encoding: utf8
   database: swa
-  pool: 5
   username: swa
   password: swa09
-  socket: /tmp/mysql.sock
   host: localhost
