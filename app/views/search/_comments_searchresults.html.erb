@@ -1,0 +1,22 @@
+<div id="comments_searchresults">
+	
+    <% if @comment_tuples && @comment_tuples.count > 0 %>
+	<h3>Results in Comments</h3><br>
+	<table>
+		<tr>
+			<td style="font-weight: bold; border-bottom: 1px solid;">Comment content</td><td style="font-weight: bold; border-bottom: 1px solid;">Author</td><td style="font-weight: bold; border-bottom: 1px solid;">Belongs to post</td>
+		</tr>
+	
+	<%
+    for comment_tuple in @comment_tuples
+	comment = comment_tuple[0]
+	post = comment_tuple[1]
+    user = find_user_by_id comment.user_id %>
+    <tr><td><%= truncate(comment.content, 40, "...") %></td><td><%= corrected_username user %></td><td><%= truncate(post.content, 40, "...") %></td></tr>
+    <% end %>
+	</table>
+    <% elsif @comment_tuples && @comment_tuples.count == 0 %>
+	<br>
+	No comments could be found for the given query.
+    <% end %>
+</div>

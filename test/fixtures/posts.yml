@@ -1,9 +1,21 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
-#one:
-#  content: MyText
-#  date: 2009-12-16 10:12:46
-#
-#two:
-#  content: MyText
-#  date: 2009-12-16 10:12:46
+post1:
+  id: 1
+  content: This is test content of post 1.
+  date: 2009-12-16 10:12:46
+
+post2:
+  id: 2
+  content: This is test content of post 2.
+  date: 2009-12-16 10:12:46
+  
+post3:
+  id: 3
+  content: This is test content of post 3.
+  date: 2009-12-16 10:12:46
+  
+post4:
+  id: 4
+  content: This is test content of post 4.
+  date: 2009-12-16 10:12:46

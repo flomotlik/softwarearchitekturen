@@ -1,9 +1,11 @@
 <div id="left">
-    <h2>Search in posts</h2>
+    <h2>Search in Posts & Comments</h2>
     <% form_remote_tag :url => { :action => "search" }, :html => {:id => 'search_form' } do %>
     <div id="search_userlist">
         Filter by users:
         <br>
+		<%= check_box_tag 'users_to_search[]', current_user.id %>
+        <span class="search_user">You</span><br>
         <% for friend in @friends %>
         <%= check_box_tag 'users_to_search[]', friend.id %>
         <span class="search_user"><%= friend.login %></span>
@@ -15,6 +17,8 @@
         <br/>
         <%= submit_tag("Start search") %>
 		<%= render :partial => 'posts_searchresults', :object => @posts %>
+		<%= render :partial => 'comments_searchresults', :object => @comment_tuples %>
+		
     </div>
     <% end %>
 </div>

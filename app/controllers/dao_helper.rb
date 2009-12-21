@@ -7,6 +7,8 @@ require_dependency 'thread_entry'
 require_dependency 'entry'
 require_dependency 'comment'
 require_dependency 'user_post'
+require_dependency 'post'
+require_dependency 'post_comment'
 
 class DaoHelper
   include Singleton
@@ -17,6 +19,16 @@ class DaoHelper
   def find_user_by_id(user_id)
     key = "User:" + user_id.to_s
     return self.check_object(CACHE[key], key) {User.find(user_id)}
+  end
+  
+  def find_comment_by_id(comment_id)
+    key = "Comment:" + comment_id.to_s
+    return self.check_object(CACHE[key], key) {Comment.find(comment_id)}
+  end
+  
+  def find_comments_by_user_id(user_id)
+    key = "Comments:User:" + user_id.to_s
+    return self.check_object(CACHE[key], key) {Comment.find(:all, :conditions => ["user_id = ?", user_id])}
   end
   
   def save_user(user)
@@ -41,7 +53,7 @@ class DaoHelper
     return self.check_object(CACHE[key], key) {Friendship.find(:all, :conditions => ["user_id = ?", user_id])}
   end
   
-
+  
   
   def find_friendship_by_userids(user1, user2)
     friendship = Friendship.find(:first, :conditions => ["user_id = ? AND friend = ?", user1, user2]) 
@@ -58,7 +70,7 @@ class DaoHelper
     
     return friends
   end
-
+  
   def save_friendship(friendship)
     friendship.save
     
@@ -101,21 +113,29 @@ class DaoHelper
   end
   
   def find_userpost_by_post_id(post_id)
-    key = "UserPost:PublicPost:" + post_id.to_s
+    key = "UserPost:Post:" + post_id.to_s
     return self.check_object(CACHE[key], key) {UserPost.find(:first, :conditions => ["post_id = ?", post_id])}
   end
   
-  def find_publicposts_by_userid(user_id)
+  
+  
+  def find_posts_by_userid(user_id)
     userposts = self.find_userposts_by_userid(user_id)
     posts = Array.new
     userposts.each do |p|
-      posts.push(self.find_publicpost_by_id(p.post_id))
+      posts.push(self.find_post_by_id(p.post_id))
     end
+    return posts
   end
   
-  def find_publicpost_by_id(post_id)
-    key = "PublicPost:" + post_id.to_s
-    return self.check_object(CACHE[key], key) {PublicPost.find(post_id)}
+  def find_post_by_commentid(comment_id)
+    postcomment = PostComment.find(:first, :conditions => ["comment_id = ?", comment_id])
+    return find_post_by_id(postcomment.post_id)
+  end
+  
+  def find_post_by_id(post_id)
+    key = "Post:" + post_id.to_s
+    return self.check_object(CACHE[key], key) {Post.find(post_id)}
   end
   
   def save_comment(comment)
@@ -252,24 +272,43 @@ class DaoHelper
   def search_posts_by_content(content, user_ids)
     results = Array.new
     for user_id in user_ids
-      userposts = find_userposts_by_userid user_id
+      userposts = find_userposts_by_userid user_id.to_s
       for userpost in userposts
-        post = find_publicpost_by_id userpost.post_id
+        post = self.find_post_by_id userpost.post_id.to_s
         hit = post.content.include? content
         if hit == true
           results.push post
         end
       end
     end
-    #return Post.find :all, :joins=>:user_post, :conditions => ["posts.content LIKE '%?%'", content]
-    #['user_posts.user_id IN ?', user_ids]
+    return results
   end
   
-  def search_comments_by_content(content, user_ids)
-    
-    key = "Comment:" + comment.id.to_s
-    self.self.check_object(CACHE[key], key) {Comment.find(thread_id)}
+  def search_comments_by_content(content, user_ids,logger)
+    results = []
+    for user_id in user_ids
+      logger.debug "Retrieving coments for user " + user_id.to_s
+      comments = find_comments_by_user_id user_id.to_s
+      for comment in comments
+        logger.debug "Comment found: " + comment.content + ", from user " + comment.user_id.to_s
+        hit = comment.content.include? content
+        logger.debug "which is hit: " + hit.to_s
+        if hit == true
+          comment_tuple = []
+          comment_tuple.push comment
+          parentpost = find_post_by_commentid comment.id
+          comment_tuple.push parentpost
+          results.push comment_tuple
+          
+          logger.debug "should be comment: " + comment_tuple[0].to_s
+          logger.debug "should be post: " + comment_tuple[1].to_s
+          
+        end 
+      end
+    end
+    return results
   end
+  
   
   ### helper methods ###
   def check_object(object, key)
