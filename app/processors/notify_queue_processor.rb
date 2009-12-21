@@ -21,7 +21,14 @@ class NotifyQueueProcessor < ApplicationProcessor
   end
   
   def notifyThreadEntry(param)
-    puts param
+    puts param.to_i
+    users = DaoHelper.find_users_by_threadid(param.to_i)
+    puts "hi"
+    puts users.length
+    for user in users
+      puts user.login
+    end
+    #puts param
   end
   
   def notifyComment(param)
