@@ -60,6 +60,11 @@ class DaoHelper
     CACHE.delete("Notifications:" + n.user_id.to_s)
   end
   
+  def save_user_notification(n)
+    n.save
+    CACHE.delete("UserNotifications:" + n.user_id.to_s)
+  end
+  
   def find_friendships_by_userid(user_id)
     key = "Friendships:" + user_id.to_s
     return self.check_object(CACHE[key], key) {Friendship.find(:all, :conditions => ["user_id = ?", user_id])}
