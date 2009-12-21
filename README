@@ -1,6 +1,9 @@
 Short Howto
-Florian Motlik - 0425525
-
+Florian Motlik  - 0425525 - diagramme, users, notifications
+Filip Hianik    -         - mq, batch processing
+Manuel Maly     -         - diagramme, ADs, searching, private threads
+Alexander Maier -         - posts, Layout
+Petar Petrov    -         - friendships, ADs
 
 --- Start Server ---
 1) Reset Database:
