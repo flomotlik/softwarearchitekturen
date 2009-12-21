@@ -4,10 +4,10 @@ one:
   reason: thread_entry
   user_id: 1
   date: 2009-12-19 18:22:54
-  object_id: 3
+  object_id: 1
 
 two:
   reason: comment
   user_id: 1
   date: 2009-12-19 18:22:54
-  object_id: 5
+  object_id: 1
