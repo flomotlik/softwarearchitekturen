@@ -3,7 +3,7 @@
     <div id="notifications">
         <% for notification in @notifications %>
         <ul>
-            <li>
+            <li><%=notification.date%> - 
                 <% case
                 when notification.reason == "comment" %>
                 Someone commented <%= link_to "your post", :controller=> "posts", :action => "show", :id=>notification.object_id %>
