@@ -13,25 +13,31 @@ class NotifyQueueProcessor < ApplicationProcessor
     if params[1] == "comment"
       notifyComment(params[0])
     else
-      notifyThreadEntry(params[0])
+      notifyThreadEntry(params[0], params[2])
     end
     
     #TODO: Deserialized object can not be accessed?! Uncomment next line to see.
     #puts "rec" + payload.kind + "rec"
   end
   
-  def notifyThreadEntry(param)
-    puts param.to_i
-    users = DaoHelper.find_users_by_threadid(param.to_i)
-    puts "hi"
-    puts users.length
+  def notifyThreadEntry(threadId, entryId)
+    users = DaoHelper.instance.find_users_by_threadid(threadId.to_i)
+    entry = DaoHelper.instance.find_entry(entryId.to_i)
+    
     for user in users
-      puts user.login
+      if user.id != entry.user_id
+        n = Notification.new(:reason => "thread_entry", :user_id => user.id, :date => Time.new , :object_id => threadId.to_i)
+        un = UserNotification.new(:user_id => user.id, :notification_id => n.id)
+        n.transaction do
+          DaoHelper.instance.save_notification(n)        
+          DaoHelper.instance.save_user_notification(un)
+        end
+      end
     end
-    #puts param
+  
   end
   
-  def notifyComment(param)
-   puts param
+  def notifyComment(commentId)
+   puts commentId
   end
 end

@@ -18,7 +18,7 @@
         <%= submit_tag("Start search") %>
 		<%= render :partial => 'posts_searchresults', :object => @posts %>
 		<%= render :partial => 'comments_searchresults', :object => @comment_tuples %>
-		
+		<%= render :partial => 'threads_and_entries_searchresults', :object => @threads_and_entries %>
     </div>
     <% end %>
 </div>

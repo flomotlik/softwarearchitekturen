@@ -97,6 +97,11 @@ class DaoHelper
     CACHE.delete("Notifications:" + n.user_id.to_s)
   end
   
+  def save_user_notification(n)
+    n.save
+    CACHE.delete("UserNotifications:" + n.user_id.to_s)
+  end
+  
   def find_friendships_by_userid(user_id)
     key = "Friendships:" + user_id.to_s
     return self.check_object(CACHE[key], key) {Friendship.find(:all, :conditions => ["user_id = ?", user_id])}
@@ -147,8 +152,10 @@ class DaoHelper
   # saves user_post and post
   def save_new_post(post)
     post.date = Time.now
-    saved_post = self.save_post(post)
-    self.save_userpost(saved_post)
+    post.transaction do
+      saved_post = self.save_post(post)
+      self.save_userpost(saved_post)
+    end
   end
   
   ## find
@@ -277,11 +284,23 @@ class DaoHelper
     key = "PrivateThreads:" + thread_id.to_s
     return self.check_object(CACHE[key], key) {PrivateThread.find(thread_id)}
   end
+
+  def find_thread_by_entry(entry_id)
+    key = "PrivateThread:Entry:" + entry_id.to_s
+    thread_entry = find_thread_entry_by_entryid entry_id
+    thread = find_thread thread_entry.thread_id
+    return thread
+  end  
   
   def find_thread_entries_by_threadid(thread_id)
     key = "ThreadEntry:PrivateThread:" + thread_id.to_s
     return self.check_object(CACHE[key], key) {ThreadEntry.find :all, :conditions => ["thread_id = ?", thread_id]}
   end
+
+  def find_thread_entry_by_entryid(entry_id)
+    key = "ThreadEntry:Entry:" + entry_id.to_s
+    return self.check_object(CACHE[key], key) {ThreadEntry.find :first, :conditions => ["entry_id = ?", entry_id]}
+  end  
   
   def find_entry(entry_id)
     key = "Entry:" + entry_id.to_s
@@ -316,12 +335,13 @@ class DaoHelper
   def add_new_entry_to_thread(entry, thread_entry, private_thread, adding_user)
     entry.user_id = adding_user.id
     entry.date = Time.now
-    saved_entry = self.save_entry(entry)
-    thread_entry.entry_id = saved_entry.id
-    thread_entry.thread_id = private_thread.id
-    thread_entry.date = Time.now
-    saved_thread_entry = self.save_thread_entry(thread_entry)
-    
+    entry.transaction do
+      saved_entry = self.save_entry(entry)
+      thread_entry.entry_id = saved_entry.id
+      thread_entry.thread_id = private_thread.id
+      thread_entry.date = Time.now
+      saved_thread_entry = self.save_thread_entry(thread_entry)
+    end
     thread_mem_key = "ThreadEntry:PrivateThread:" + private_thread.id.to_s
     CACHE.delete(thread_mem_key)
   end
@@ -331,17 +351,19 @@ class DaoHelper
   def save_new_thread(entry, thread_entry, private_thread, adding_user, receiving_users_ids)
     private_thread.date = Time.now
     private_thread.author_user_id = adding_user
-    saved_thread = save_private_thread private_thread
-    receiving_users_ids.push adding_user.id
-    for receiving_user_id in receiving_users_ids do
-      user_thread = UserThread.new 
-      user_thread.private_thread_id = saved_thread.id
-      user_thread.user_id = receiving_user_id
-      user_thread.save
-      user_thread_mem_key = "UserThreads:User:" + receiving_user_id.to_s
-      CACHE.delete(user_thread_mem_key)
+    private_thread.transaction do
+      saved_thread = save_private_thread private_thread
+      receiving_users_ids.push adding_user.id
+      for receiving_user_id in receiving_users_ids do
+        user_thread = UserThread.new 
+        user_thread.private_thread_id = saved_thread.id
+        user_thread.user_id = receiving_user_id
+        user_thread.save
+        user_thread_mem_key = "UserThreads:User:" + receiving_user_id.to_s
+        CACHE.delete(user_thread_mem_key)
+      end
+      self.add_new_entry_to_thread entry, thread_entry, private_thread, adding_user
     end
-    self.add_new_entry_to_thread entry, thread_entry, private_thread, adding_user
   end
   
   def search_posts_by_content(content, user_ids)
@@ -384,6 +406,24 @@ class DaoHelper
     return results
   end
   
+
+  def search_private_thread_ids_by_content(content, user_ids,logger)
+    results = []
+    for user_id in user_ids
+      logger.debug "Retrieving threads for user " + user_id.to_s
+      threads = find_threads_by_userid user_id.to_s 
+      for thread in threads
+        logger.debug "Thread found: " + thread.title + ", from user " + thread.author_user_id.to_s
+        hit = thread.title.include? content
+        logger.debug "which is hit: " + hit.to_s
+        if hit == true
+          results.push thread.id
+        end 
+      end
+    end
+    return results
+  end  
+
   
   ### helper methods ###
   def check_object(object, key)

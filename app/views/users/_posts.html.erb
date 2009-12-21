@@ -1,0 +1,11 @@
+<div id="posts">
+    <h3>My Posts</h3>
+    <% @allposts.each do |post| %>
+    <div class="post" id="post:"<%= post.id %>>
+        <div>
+            <span>Post on: <%=post.created_at%></span><br>
+			<span><%= post.content %></span>
+            <hr>
+        </div>
+    </div><% end %>
+</div>

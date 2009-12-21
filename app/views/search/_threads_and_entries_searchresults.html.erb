@@ -1,0 +1,52 @@
+<div id="threads_and_entries_searchresults">
+    <% if @threads_and_entries && @threads_and_entries.length > 0 %>
+    <h3>Results in Message Threads & Messages</h3>
+    <br>
+    <table>
+        <tr>
+            <td>
+            </td>
+            <td style="font-weight: bold; border-bottom: 1px solid;">
+                Content/Title
+            </td>
+            <td style="font-weight: bold; border-bottom: 1px solid;">
+                Author
+            </td>
+        </tr>
+        <%
+        thread_ids = @threads_and_entries.keys
+        for thread_id in thread_ids
+        thread = find_thread thread_id
+        author = find_user_by_id thread.author_user_id %>
+        <tr>
+            <td><%= link_to image_tag("post_icon.png", :border=>0), {:controller => :private_threads, :action => :show, :id => thread_id} %>
+            </td>
+            <td>
+                <%= link_to truncate(thread.title, 40, "..."), {:controller => :private_threads, :action => :show, :id => thread_id} %>
+            </td>
+            <td>
+                <%= corrected_username author %>
+            </td>
+        </tr>
+        <%
+        entries_ids = @threads_and_entries[thread_id]
+        for entry_id in entries_ids
+		entry = find_entry entry_id
+        author = find_user_by_id entry.user_id %>
+        <tr class="search_threadentry_row">
+            <td><%= link_to image_tag("comment_icon.png", :border=>0), {:controller => :private_threads, :action => :show, :id => thread_id} %>
+            </td>
+            <td style="padding-left: 10px;">
+            	<%= link_to truncate(entry.content, 40, "..."), {:controller => :private_threads, :action => :show, :id => thread_id} %>
+            </td>
+            <td>
+                <%= corrected_username author %>
+            </td>
+        </tr>
+        <% end %>
+        <% end %>
+    </table>
+    <% elsif @threads_and_entries && @threads_and_entries.length == 0 %>
+    <br>
+    No message-threads or messages could be found for the given query.<% end %>
+</div>

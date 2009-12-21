@@ -15,11 +15,11 @@
 	
 	<% @posts.each do |post| %>
 	
-	<% user_post = self.find_user_by_id(post.user_id) %>
+	<% #user_post = self.find_user_by_id(post.user_id) %>
 	
 	<div class="post">
 		<div>
-			<span><strong>User: <%=h user_post.login %></strong></span>&nbsp;-&nbsp;<%=h post.content %>
+			<span><strong><%= post.user_id %><%#=h user_post.login %></strong></span>&nbsp;-&nbsp;<%=h post.content %>
 		</div>
 		
 		<div class="meta">

@@ -7,4 +7,6 @@ else
   page.replace_html :posts_searchresults, :partial => 'posts_searchresults', :object => @posts
   
   page.replace_html :comments_searchresults, :partial => 'comments_searchresults', :object => @comment_tuples
+  
+  page.replace_html :threads_and_entries_searchresults, :partial => 'threads_and_entries_searchresults', :object => @threads_and_entries
 end

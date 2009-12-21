@@ -215,6 +215,8 @@ a:hover {
 
 .input_search{width: 500px; }
 
+.search_threadentry_row td {background-color: #ccc;}
+
 /* POSTS ******************/
 #poster{
 	border-bottom: 1px solid #999;

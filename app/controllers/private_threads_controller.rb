@@ -1,5 +1,5 @@
 class PrivateThreadsController < ApplicationController
-  
+  before_filter :require_user
   helper_method :find_entry, :find_user_by_id, :content_of_newest_threadentry, :find_users_by_threadid, :corrected_username
   
   #List all threads

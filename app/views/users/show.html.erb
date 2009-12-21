@@ -1,13 +1,12 @@
-<div id="one_col">
-	<h2>Account: <%= @user.login%></h2>
-	<div id="sub_menu">
-		<ul>
-			<li><%= link_to 'Edit', edit_account_path %></li>
-		</ul>
-	</div>
-  	<div>
-		<b>Login:</b>
-		<%=h @user.login %>
-	</div>
+<div id="content">
+    <h2>Account: <%= @user.login %></h2>
+    <div id="sub_menu">
+        <%= link_to 'Edit', edit_account_path %>
+    </div>
+	<%= render :partial => 'posts' %>
+   
+    <div>
+        <b>Login:</b>
+        <%=h @user.login %>
+    </div>
 </div>
- 
