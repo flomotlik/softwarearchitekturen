@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: swa_ass3
+Bundle-SymbolicName: swa_ass3; singleton:=true
+Bundle-Version: 1.0.0
+Require-Bundle:  org.eclipse.xpand,
+ org.eclipse.xtend,
+ org.eclipse.xtend.typesystem.emf
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
