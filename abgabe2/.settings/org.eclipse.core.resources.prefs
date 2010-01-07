@@ -1,4 +1,6 @@
-#Mon Jan 04 19:34:55 CET 2010
+#Thu Jan 07 13:22:00 CET 2010
 eclipse.preferences.version=1
-encoding//src/template/Template.xpt=ISO-8859-1
+encoding//src-example/template/Template.xpt=ISO-8859-1
+encoding//src/metamodel/metamodel.ecore=UTF-8
+encoding//src/metamodel/metamodel.ecorediag=UTF-8
 encoding/<project>=ISO-8859-1
