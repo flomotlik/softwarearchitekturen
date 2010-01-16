@@ -3,22 +3,20 @@
     xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="metamodel"
     nsURI="http://metamodel/1.0" nsPrefix="metamodel">
-  <eClassifiers xsi:type="ecore:EDataType" name="EDataType0"/>
   <eClassifiers xsi:type="ecore:EClass" name="PlainVariable" eSuperTypes="#//Variable"/>
   <eClassifiers xsi:type="ecore:EClass" name="Entity" eSuperTypes="#//Type">
     <eStructuralFeatures xsi:type="ecore:EReference" name="hasAttribute" upperBound="-1"
         eType="#//Variable" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="hasConnection" upperBound="-1"
         eType="#//Connection" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="hasEntity" eType="#//Entity"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="hasEntity" upperBound="-1"
-        eType="#//ConnectionToEntity"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="belongsToEntity" upperBound="-1"
         eType="#//ConnectionToEntity"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="hasTransientAttr" upperBound="-1"
         eType="#//TransientVariable" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="hasValidation" upperBound="-1"
         eType="#//Validation_ValueRestriction"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="hasEntity" upperBound="-1"
+        eType="#//ConnectionToEntity"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Type" abstract="true">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -26,7 +24,13 @@
   <eClassifiers xsi:type="ecore:EClass" name="Datatype" eSuperTypes="#//Type"/>
   <eClassifiers xsi:type="ecore:EClass" name="Validation_ValueRestriction">
     <eStructuralFeatures xsi:type="ecore:EReference" name="validates" eType="#//Variable"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="restrictToValues" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EEList"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="restrictToValues" transient="true">
+      <eGenericType eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EEList">
+        <eTypeArguments>
+          <eClassifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        </eTypeArguments>
+      </eGenericType>
+    </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Connection" abstract="true">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -39,10 +43,7 @@
         eType="#//Entity"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="cardinalityMany" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="TransientVariable" eSuperTypes="#//Variable">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="type" lowerBound="1" eType="#//Type"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EDataType" name="Cardinality"/>
+  <eClassifiers xsi:type="ecore:EClass" name="TransientVariable" eSuperTypes="#//Variable"/>
   <eClassifiers xsi:type="ecore:EClass" name="Variable" abstract="true">
     <eStructuralFeatures xsi:type="ecore:EReference" name="type" lowerBound="1" eType="#//Type"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -58,7 +59,13 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="StaticVariable" eSuperTypes="#//Variable"/>
   <eClassifiers xsi:type="ecore:EClass" name="Extension_MQPublishing">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="queues" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EEList"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="queues" transient="true">        
+      <eGenericType eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EEList">
+        <eTypeArguments>
+          <eClassifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        </eTypeArguments>
+      </eGenericType>
+    </eStructuralFeatures>    
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="View" eSuperTypes="#//Type">
     <eStructuralFeatures xsi:type="ecore:EReference" name="belongsTo" lowerBound="1"
