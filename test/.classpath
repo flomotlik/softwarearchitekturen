@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="src-gen"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
+	<classpathentry kind="lib" path="/abgabe2/com.ibm.icu_4.0.1.v20090822.jar"/>
+	<classpathentry kind="lib" path="/abgabe2/org.antlr.runtime_3.0.0.v200908120607.jar"/>
+	<classpathentry kind="lib" path="/abgabe2/org.eclipse.emf.ecore.xmi_2.5.0.v200906151043.jar"/>
+	<classpathentry kind="lib" path="/abgabe2/org.eclipse.emf.mwe.utils_0.7.2.v200908120417.jar"/>
+	<classpathentry kind="lib" path="/abgabe2/org.eclipse.equinox.common_3.5.1.R35x_v20090807-1100.jar"/>
+	<classpathentry kind="lib" path="/abgabe2/org.eclipse.jdt.core_3.5.1.v_972_R35x.jar"/>
+	<classpathentry kind="lib" path="/abgabe2/org.eclipse.text_3.5.0.v20090513-2000.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
