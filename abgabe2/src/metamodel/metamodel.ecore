@@ -64,4 +64,9 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="belongsTo" lowerBound="1"
         eType="#//Controller"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Model" eSuperTypes="#//Type">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="EReference0" eType="#//Type"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="hasTypes" upperBound="-1"
+        eType="#//Type" containment="true"/>
+  </eClassifiers>
 </ecore:EPackage>
