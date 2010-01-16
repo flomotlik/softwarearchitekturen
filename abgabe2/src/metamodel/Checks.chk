@@ -1,0 +1,4 @@
+import data;
+context metamodel::View ERROR
+	 "Names must be more than one char long" :
+	 name.length > 1;

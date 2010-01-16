@@ -1,0 +1,17 @@
+«DEFINE root FOR metamodel::Model»
+  «EXPAND view FOREACH hasViews»
+«ENDDEFINE»
+
+
+«DEFINE view FOR metamodel::View»
+	«FILE name + ".erb"»
+<html>
+  <head>
+    <title>«name»</title>
+  <head>
+  <body>
+    <h1>«name»</h1>
+  </body>
+</html>
+	«ENDFILE»
+«ENDDEFINE» 

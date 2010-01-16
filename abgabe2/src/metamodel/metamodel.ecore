@@ -2,7 +2,7 @@
 <ecore:EPackage xmi:version="2.0"
     xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="metamodel"
-    nsURI="http://metamodel/1.0" nsPrefix="metamodel">
+    nsURI="http://www.example.org/metamodel" nsPrefix="metamodel">
   <eClassifiers xsi:type="ecore:EClass" name="PlainVariable" eSuperTypes="#//Variable"/>
   <eClassifiers xsi:type="ecore:EClass" name="Entity" eSuperTypes="#//Type">
     <eStructuralFeatures xsi:type="ecore:EReference" name="hasAttribute" upperBound="-1"
@@ -26,9 +26,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="validates" eType="#//Variable"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="restrictToValues" transient="true">
       <eGenericType eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EEList">
-        <eTypeArguments>
-          <eClassifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-        </eTypeArguments>
+        <eTypeArguments eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
       </eGenericType>
     </eStructuralFeatures>
   </eClassifiers>
@@ -54,18 +52,14 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="extendedBy" upperBound="-1"
         eType="#//Extension_MQPublishing"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Controller" eSuperTypes="#//Type">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="EReference0" eType="#//View"/>
-  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Controller" eSuperTypes="#//Type"/>
   <eClassifiers xsi:type="ecore:EClass" name="StaticVariable" eSuperTypes="#//Variable"/>
   <eClassifiers xsi:type="ecore:EClass" name="Extension_MQPublishing">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="queues" transient="true">        
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="queues" transient="true">
       <eGenericType eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EEList">
-        <eTypeArguments>
-          <eClassifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-        </eTypeArguments>
+        <eTypeArguments eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
       </eGenericType>
-    </eStructuralFeatures>    
+    </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="View" eSuperTypes="#//Type">
     <eStructuralFeatures xsi:type="ecore:EReference" name="belongsTo" lowerBound="1"
@@ -73,7 +67,9 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Model" eSuperTypes="#//Type">
     <eStructuralFeatures xsi:type="ecore:EReference" name="EReference0" eType="#//Type"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="hasTypes" upperBound="-1"
-        eType="#//Type" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="hasViews" upperBound="-1"
+        eType="#//View" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="hasControllers" upperBound="-1"
+        eType="#//Controller" containment="true"/>
   </eClassifiers>
 </ecore:EPackage>
