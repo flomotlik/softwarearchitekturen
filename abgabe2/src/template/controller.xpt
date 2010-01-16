@@ -1,0 +1,16 @@
+«DEFINE root FOR metamodel::Model»
+  «EXPAND controller FOREACH hasControllers»
+«ENDDEFINE»
+
+
+«DEFINE controller FOR metamodel::Controller»
+	«FILE name.toLowerCase() + "_controller.rb"»
+	«IF name.matches("Application")»
+class ApplicationController < ActionController::Base
+end
+	«ELSE»
+class «name» < ApplicationController
+end
+	«ENDIF»
+	«ENDFILE»
+«ENDDEFINE» 
