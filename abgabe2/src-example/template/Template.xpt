@@ -1,25 +1,25 @@
-ÇIMPORT metamodelÈ
+«IMPORT metamodel»
 
-ÇEXTENSION template::GeneratorExtensionsÈ
+«EXTENSION template::GeneratorExtensions»
 
-ÇDEFINE main FOR ModelÈ
-ÇEXPAND javaClass FOREACH entities()È
-ÇENDDEFINEÈ
+«DEFINE main FOR Model»
+«EXPAND javaClass FOREACH entities()»
+«ENDDEFINE»
 
-ÇDEFINE javaClass FOR EntityÈ
-	ÇFILE name+".java"È
-		public class ÇnameÈ {
-			ÇFOREACH features AS fÈ
-				private Çf.type.nameÈ Çf.nameÈ;
+«DEFINE javaClass FOR Entity»
+	«FILE name+".java"»
+		public class «name» {
+			«FOREACH features AS f»
+				private «f.type.name» «f.name»;
 				
-				public void Çf.setter()È(Çf.type.nameÈ Çf.nameÈ) {
-					this.Çf.nameÈ = Çf.nameÈ;
+				public void «f.setter()»(«f.type.name» «f.name») {
+					this.«f.name» = «f.name»;
 				}
 				
-				public Çf.type.nameÈ Çf.getter()È() {
-					return Çf.nameÈ;
+				public «f.type.name» «f.getter()»() {
+					return «f.name»;
 				}
-			ÇENDFOREACHÈ
+			«ENDFOREACH»
 		}
-	ÇENDFILEÈ
-ÇENDDEFINEÈ
+	«ENDFILE»
+«ENDDEFINE»

@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <workflow>
-	<property name="model" value="abgabe2/src/Model.xmi" />
+	<property name="model" value="abgabe2/src-example/Model.xmi" />
 	<property name="src-gen" value="src-gen" />
 	
 	<!-- set up EMF for standalone execution -->
