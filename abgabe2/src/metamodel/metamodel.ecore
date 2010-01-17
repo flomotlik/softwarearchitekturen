@@ -17,6 +17,8 @@
         eType="#//Validation_ValueRestriction"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="hasEntity" upperBound="-1"
         eType="#//ConnectionToEntity"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="isObservedBy" upperBound="-1"
+        eType="#//EntityObserver"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Type" abstract="true">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -47,8 +49,6 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="EntityObserver">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="observes" lowerBound="1"
-        eType="#//Entity"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="extendedBy" upperBound="-1"
         eType="#//Extension_MQPublishing"/>
   </eClassifiers>
@@ -66,10 +66,10 @@
         eType="#//Controller"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Model" eSuperTypes="#//Type">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="hasViews" upperBound="-1"
-        eType="#//View" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="hasControllers" upperBound="-1"
         eType="#//Controller" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="hasViews" upperBound="-1"
+        eType="#//View" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="hasEntities" upperBound="-1"
         eType="#//Entity" containment="true"/>
   </eClassifiers>
