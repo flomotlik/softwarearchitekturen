@@ -1,0 +1,30 @@
+«REM»
+ PLEASE do NOT indent this file. LEAVE IT AS IT IS. I know it is harder to read it, but since there
+ are no 'Beautifier' classes for EMF (only oAW) and no RoR-Beautifier classes at all the generated
+ output looks horrible. As if a bomb is fallen :)
+ If you leave it that way the output is clean and readable
+«ENDREM»
+«DEFINE root FOR metamodel::Model»
+	«FILE "schema.rb" »
+# This file is auto-generated from the current state of the database. Instead of editing this file, 
+# please use the migrations feature of Active Record to incrementally modify your database, and
+# then regenerate this schema definition.
+#
+# Note that this schema.rb definition is the authoritative source for your database schema. If you need
+# to create the application database on another system, you should be using db:schema:load, not running
+# all the migrations from scratch. The latter is a flawed and unsustainable approach (the more migrations
+# you'll amass, the slower it'll run and the greater likelihood for issues).
+#
+# It's strongly recommended to check this file into your version control system.
+
+ActiveRecord::Schema.define(:version => 20091219172254) do
+		«EXPAND entity FOREACH hasEntities»	
+end
+	«ENDFILE»	
+«ENDDEFINE»
+
+«DEFINE entity FOR metamodel::Entity»
+	create_table "«IF name.endsWith("y")»«name.subString(0, name.length-1).toLowerCase()»ies«ELSE»«name.toLowerCase()»s«ENDIF»", :force => true do |t|«FOREACH hasAttribute AS attr»
+		t.«attr.metaType»	"«attr.name.toString()»"«ENDFOREACH»
+	end
+«ENDDEFINE»
