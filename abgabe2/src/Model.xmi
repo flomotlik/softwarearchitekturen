@@ -56,6 +56,7 @@
     <hasAttribute xsi:type="metamodel:PlainVariable" type="//@types.3" name="user_id"/>
     <hasAttribute xsi:type="metamodel:PlainVariable" type="//@types.2" name="created_at"/>
     <hasAttribute xsi:type="metamodel:PlainVariable" type="//@types.2" name="updated_at"/>
+    <hasTransientAttr name="search_hit"/>
   </hasEntities>
   <hasEntities name="Friendship">
     <hasAttribute xsi:type="metamodel:PlainVariable" type="//@types.2" name="date"/>
@@ -63,6 +64,7 @@
     <hasAttribute xsi:type="metamodel:PlainVariable" type="//@types.3" name="user_id"/>
     <hasAttribute xsi:type="metamodel:PlainVariable" type="//@types.2" name="created_at"/>
     <hasAttribute xsi:type="metamodel:PlainVariable" type="//@types.2" name="updated_at"/>
+    <belongsToEntity name="user" otherEntity="//@hasEntities.14"/>
   </hasEntities>
   <hasEntities name="Notification">
     <hasAttribute xsi:type="metamodel:PlainVariable" type="//@types.1" name="reason"/>
@@ -77,6 +79,7 @@
     <hasAttribute xsi:type="metamodel:PlainVariable" type="//@types.3" name="post_id"/>
     <hasAttribute xsi:type="metamodel:PlainVariable" type="//@types.2" name="created_at"/>
     <hasAttribute xsi:type="metamodel:PlainVariable" type="//@types.2" name="updated_at"/>
+    <belongsToEntity name="post" otherEntity="//@hasEntities.5"/>
   </hasEntities>
   <hasEntities name="Post">
     <hasAttribute xsi:type="metamodel:PlainVariable" type="//@types.0" name="content"/>
@@ -84,6 +87,8 @@
     <hasAttribute xsi:type="metamodel:PlainVariable" type="//@types.3" name="user_id"/>
     <hasAttribute xsi:type="metamodel:PlainVariable" type="//@types.2" name="created_at"/>
     <hasAttribute xsi:type="metamodel:PlainVariable" type="//@types.2" name="updated_at"/>
+    <hasEntity name="post_comment" otherEntity="//@hasEntities.4" cardinalityMany="true"/>
+    <hasEntity name="user_post" otherEntity="//@hasEntities.12" cardinalityMany="true"/>
   </hasEntities>
   <hasEntities name="Private_Thread">
     <hasAttribute xsi:type="metamodel:PlainVariable" type="//@types.2" name="date"/>
@@ -91,6 +96,9 @@
     <hasAttribute xsi:type="metamodel:PlainVariable" type="//@types.3" name="author_user_id"/>
     <hasAttribute xsi:type="metamodel:PlainVariable" type="//@types.2" name="created_at"/>
     <hasAttribute xsi:type="metamodel:PlainVariable" type="//@types.2" name="updated_at"/>
+    <hasTransientAttr name="date_of_newest_entry"/>
+    <hasEntity name="thread_entries" otherEntity="//@hasEntities.7" cardinalityMany="true"/>
+    <hasEntity name="user_threads" otherEntity="//@hasEntities.13" cardinalityMany="true"/>
   </hasEntities>
   <hasEntities name="Thread_Entry">
     <hasAttribute xsi:type="metamodel:PlainVariable" type="//@types.3" name="entry_id"/>
@@ -98,6 +106,7 @@
     <hasAttribute xsi:type="metamodel:PlainVariable" type="//@types.2" name="date"/>
     <hasAttribute xsi:type="metamodel:PlainVariable" type="//@types.2" name="created_at"/>
     <hasAttribute xsi:type="metamodel:PlainVariable" type="//@types.2" name="updated_at"/>
+    <belongsToEntity name="thread"/>
   </hasEntities>
   <hasEntities name="User_Block">
     <hasAttribute xsi:type="metamodel:PlainVariable" type="//@types.3" name="blocked_id"/>
@@ -105,36 +114,43 @@
     <hasAttribute xsi:type="metamodel:PlainVariable" type="//@types.2" name="date"/>
     <hasAttribute xsi:type="metamodel:PlainVariable" type="//@types.2" name="created_at"/>
     <hasAttribute xsi:type="metamodel:PlainVariable" type="//@types.2" name="updated_at"/>
+    <belongsToEntity name="user"/>
   </hasEntities>
   <hasEntities name="User_Comment">
     <hasAttribute xsi:type="metamodel:PlainVariable" type="//@types.3" name="comment_id"/>
     <hasAttribute xsi:type="metamodel:PlainVariable" type="//@types.3" name="user_id"/>
     <hasAttribute xsi:type="metamodel:PlainVariable" type="//@types.2" name="created_at"/>
     <hasAttribute xsi:type="metamodel:PlainVariable" type="//@types.2" name="updated_at"/>
+    <belongsToEntity name="user"/>
   </hasEntities>
   <hasEntities name="User_Entry">
     <hasAttribute xsi:type="metamodel:PlainVariable" type="//@types.3" name="enty_id"/>
     <hasAttribute xsi:type="metamodel:PlainVariable" type="//@types.3" name="user_id"/>
     <hasAttribute xsi:type="metamodel:PlainVariable" type="//@types.2" name="created_at"/>
     <hasAttribute xsi:type="metamodel:PlainVariable" type="//@types.2" name="updated_at"/>
+    <belongsToEntity name="user"/>
   </hasEntities>
   <hasEntities name="User_Notification">
     <hasAttribute xsi:type="metamodel:PlainVariable" type="//@types.3" name="notification_id"/>
     <hasAttribute xsi:type="metamodel:PlainVariable" type="//@types.3" name="user_id"/>
     <hasAttribute xsi:type="metamodel:PlainVariable" type="//@types.2" name="created_at"/>
     <hasAttribute xsi:type="metamodel:PlainVariable" type="//@types.2" name="updated_at"/>
+    <belongsToEntity name="user"/>
   </hasEntities>
   <hasEntities name="User_Post">
     <hasAttribute xsi:type="metamodel:PlainVariable" type="//@types.3" name="post_id"/>
     <hasAttribute xsi:type="metamodel:PlainVariable" type="//@types.3" name="user_id"/>
     <hasAttribute xsi:type="metamodel:PlainVariable" type="//@types.2" name="created_at"/>
     <hasAttribute xsi:type="metamodel:PlainVariable" type="//@types.2" name="updated_at"/>
+    <belongsToEntity name="user"/>
   </hasEntities>
   <hasEntities name="User_Thread">
     <hasAttribute xsi:type="metamodel:PlainVariable" type="//@types.3" name="private_thread_id"/>
     <hasAttribute xsi:type="metamodel:PlainVariable" type="//@types.3" name="user_id"/>
     <hasAttribute xsi:type="metamodel:PlainVariable" type="//@types.2" name="created_at"/>
     <hasAttribute xsi:type="metamodel:PlainVariable" type="//@types.2" name="updated_at"/>
+    <hasEntity name="private_thread"/>
+    <hasEntity name="user"/>
   </hasEntities>
   <hasEntities name="User">
     <hasAttribute xsi:type="metamodel:PlainVariable" type="//@types.1" name="login"/>
@@ -143,7 +159,14 @@
     <hasAttribute xsi:type="metamodel:PlainVariable" type="//@types.1" name="persistence_token"/>
     <hasAttribute xsi:type="metamodel:PlainVariable" type="//@types.2" name="created_at"/>
     <hasAttribute xsi:type="metamodel:PlainVariable" type="//@types.2" name="updated_at"/>
+    <hasEntity name="friendships" cardinalityMany="true"/>
+    <hasEntity name="user_posts" cardinalityMany="true"/>
+    <hasEntity name="user_notifications" cardinalityMany="true"/>
+    <hasEntity name="user_blocks" cardinalityMany="true"/>
+    <hasEntity name="user_entries" cardinalityMany="true"/>
+    <hasEntity name="user_comment" cardinalityMany="true"/>
   </hasEntities>
+  <hasEntities name="User_Session" base="Authlogic::Session::Base"/>
   <types xsi:type="metamodel:Datatype" name="text"/>
   <types xsi:type="metamodel:Datatype" name="string"/>
   <types xsi:type="metamodel:Datatype" name="datetime"/>

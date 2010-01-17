@@ -43,4 +43,9 @@
 		<expand value="template::schema::root FOR model" />
 		<outlet path="src-gen/db" />
 	</component>
+	<component class="org.eclipse.xpand2.Generator">
+		<metaModel idRef="mm"/>
+		<expand value="template::entity::root FOR model" />
+		<outlet path="${src-gen}/models" />
+	</component>
 </workflow>

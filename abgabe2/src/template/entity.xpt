@@ -1,0 +1,21 @@
+«DEFINE root FOR metamodel::Model»
+  «EXPAND entity FOREACH hasEntities»
+«ENDDEFINE»
+
+«DEFINE entity FOR metamodel::Entity»
+«FILE name.toLowerCase() + ".rb"-»
+class «name.replaceAll("_", "")» < «IF base != null»«base»«ELSE»ActiveRecord::Base«ENDIF»
+«FOREACH belongsToEntity AS belongs-»
+  belongs_to :«belongs.name»
+«ENDFOREACH-»
+«FOREACH hasEntity AS has-»
+«IF has.cardinalityMany-»
+  has_many«ELSE-»  has_one«ENDIF-»
+ :«has.name»
+«ENDFOREACH-»
+«FOREACH hasTransientAttr AS t-»
+  attr_accessor :«t.name»
+«ENDFOREACH-»
+end
+«ENDFILE-»
+«ENDDEFINE» 
