@@ -66,10 +66,11 @@
         eType="#//Controller"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Model" eSuperTypes="#//Type">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="EReference0" eType="#//Type"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="hasViews" upperBound="-1"
         eType="#//View" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="hasControllers" upperBound="-1"
         eType="#//Controller" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="hasEntities" upperBound="-1"
+        eType="#//Entity" containment="true"/>
   </eClassifiers>
 </ecore:EPackage>
