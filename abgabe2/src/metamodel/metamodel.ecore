@@ -7,16 +7,14 @@
   <eClassifiers xsi:type="ecore:EClass" name="Entity" eSuperTypes="#//Type">
     <eStructuralFeatures xsi:type="ecore:EReference" name="hasAttribute" upperBound="-1"
         eType="#//Variable" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="hasConnection" upperBound="-1"
-        eType="#//Connection" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="belongsToEntity" upperBound="-1"
-        eType="#//ConnectionToEntity"/>
+        eType="#//ConnectionToEntity" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="hasTransientAttr" upperBound="-1"
         eType="#//TransientVariable" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="hasValidation" upperBound="-1"
         eType="#//Validation_ValueRestriction"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="hasEntity" upperBound="-1"
-        eType="#//ConnectionToEntity"/>
+        eType="#//ConnectionToEntity" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="isObservedBy" upperBound="-1"
         eType="#//EntityObserver"/>
   </eClassifiers>
@@ -32,11 +30,6 @@
       </eGenericType>
     </eStructuralFeatures>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Connection" abstract="true">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ActiveConn" eSuperTypes="#//Connection"/>
-  <eClassifiers xsi:type="ecore:EClass" name="PassiveConn" eSuperTypes="#//Connection"/>
   <eClassifiers xsi:type="ecore:EClass" name="ConnectionToEntity">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="otherEntity" lowerBound="1"
