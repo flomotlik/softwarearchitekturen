@@ -22,6 +22,7 @@
 		<emfAllChildrenSlot value="model" />
 	</component>
  
+ 	<!-- cleanup src-gen directory -->
  	<component class="org.eclipse.emf.mwe.utils.DirectoryCleaner">
   		<directory value="${src-gen}"/>
 	</component>
@@ -36,5 +37,10 @@
 		<metaModel idRef="mm"/>
 		<expand value="template::controller::root FOR model" />
 		<outlet path="${src-gen}/controllers" />
+	</component>
+	<component class="org.eclipse.xpand2.Generator">
+		<metaModel idRef="mm"/>
+		<expand value="template::schema::root FOR model" />
+		<outlet path="src-gen/db" />
 	</component>
 </workflow>

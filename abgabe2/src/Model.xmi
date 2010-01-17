@@ -1,5 +1,15 @@
 <?xml version="1.0" encoding="ASCII"?>
 <metamodel:Model xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:metamodel="http://www.example.org/metamodel" xsi:schemaLocation="http://www.example.org/metamodel metamodel/metamodel.ecore">
+  <hasControllers name="Comments"/>
+  <hasControllers name="Application"/>
+  <hasControllers name="Friends"/>
+  <hasControllers name="Notification"/>
+  <hasControllers name="Post"/>
+  <hasControllers name="Posts"/>
+  <hasControllers name="Private_Threads"/>
+  <hasControllers name="Search"/>
+  <hasControllers name="User_Sessions"/>
+  <hasControllers name="Users"/>
   <hasViews name="New" belongsTo="//@hasControllers.0"/>
   <hasViews name="Create" belongsTo="//@hasControllers.0"/>
   <hasViews name="_Show" belongsTo="//@hasControllers.0"/>
@@ -33,14 +43,18 @@
   <hasViews name="Edit" belongsTo="//@hasControllers.9"/>
   <hasViews name="New" belongsTo="//@hasControllers.9"/>
   <hasViews name="Show" belongsTo="//@hasControllers.9"/>
-  <hasControllers name="Comments"/>
-  <hasControllers name="Application"/>
-  <hasControllers name="Friends"/>
-  <hasControllers name="Notification"/>
-  <hasControllers name="Post"/>
-  <hasControllers name="Posts"/>
-  <hasControllers name="Private_Threads"/>
-  <hasControllers name="Search"/>
-  <hasControllers name="User_Sessions"/>
-  <hasControllers name="Users"/>
+  <hasEntities name="Comment">
+    <hasAttribute xsi:type="metamodel:PlainVariable" type="//@hasEntities.0" name="content"/>
+    <hasAttribute xsi:type="metamodel:PlainVariable" type="//@hasEntities.0" name="date"/>
+    <hasAttribute xsi:type="metamodel:PlainVariable" type="//@hasEntities.0" name="user_id"/>
+    <hasAttribute xsi:type="metamodel:PlainVariable" type="//@hasEntities.0" name="created_at"/>
+    <hasAttribute xsi:type="metamodel:PlainVariable" type="//@hasEntities.0" name="updated_at"/>
+  </hasEntities>
+  <hasEntities name="Entry">
+    <hasAttribute xsi:type="metamodel:PlainVariable" type="//@hasEntities.1" name="content"/>
+    <hasAttribute xsi:type="metamodel:PlainVariable" type="//@hasEntities.1" name="date"/>
+    <hasAttribute xsi:type="metamodel:PlainVariable" type="//@hasEntities.1" name="user_id"/>
+    <hasAttribute xsi:type="metamodel:PlainVariable" type="//@hasEntities.1" name="created_at"/>
+    <hasAttribute xsi:type="metamodel:PlainVariable" type="//@hasEntities.1" name="updated_at"/>
+  </hasEntities>
 </metamodel:Model>
