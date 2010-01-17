@@ -1,5 +1,46 @@
 <?xml version="1.0" encoding="ASCII"?>
 <metamodel:Model xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:metamodel="http://www.example.org/metamodel" xsi:schemaLocation="http://www.example.org/metamodel metamodel/metamodel.ecore">
-  <hasViews name="Main" belongsTo="//@hasControllers.0"/>
-  <hasControllers name="Main"/>
+  <hasViews name="New" belongsTo="//@hasControllers.0"/>
+  <hasViews name="Create" belongsTo="//@hasControllers.0"/>
+  <hasViews name="_Show" belongsTo="//@hasControllers.0"/>
+  <hasViews name="_Friendships" belongsTo="//@hasControllers.2"/>
+  <hasViews name="_No_Friendships" belongsTo="//@hasControllers.2"/>
+  <hasViews name="Index" belongsTo="//@hasControllers.2"/>
+  <hasViews name="New" belongsTo="//@hasControllers.2"/>
+  <hasViews name="_Show" belongsTo="//@hasControllers.3"/>
+  <hasViews name="_Comment" belongsTo="//@hasControllers.5"/>
+  <hasViews name="_New_Form" belongsTo="//@hasControllers.5"/>
+  <hasViews name="_Post_Comment" belongsTo="//@hasControllers.5"/>
+  <hasViews name="Edit" belongsTo="//@hasControllers.5"/>
+  <hasViews name="Index" belongsTo="//@hasControllers.5"/>
+  <hasViews name="New" belongsTo="//@hasControllers.5"/>
+  <hasViews name="Show" belongsTo="//@hasControllers.5"/>
+  <hasViews name="_Thread_Entries" belongsTo="//@hasControllers.6"/>
+  <hasViews name="_Threads_Index" belongsTo="//@hasControllers.6"/>
+  <hasViews name="Index" belongsTo="//@hasControllers.6"/>
+  <hasViews name="New" belongsTo="//@hasControllers.6"/>
+  <hasViews name="Show" belongsTo="//@hasControllers.6"/>
+  <hasViews name="_Comments_Searchresults" belongsTo="//@hasControllers.7"/>
+  <hasViews name="_Posts_Searchresults" belongsTo="//@hasControllers.7"/>
+  <hasViews name="_Threads_And_Entries_Searchresults" belongsTo="//@hasControllers.7"/>
+  <hasViews name="Index" belongsTo="//@hasControllers.7"/>
+  <hasViews name="Post" belongsTo="//@hasControllers.7"/>
+  <hasViews name="Thread" belongsTo="//@hasControllers.7"/>
+  <hasViews name="User" belongsTo="//@hasControllers.7"/>
+  <hasViews name="New" belongsTo="//@hasControllers.8"/>
+  <hasViews name="_Form" belongsTo="//@hasControllers.9"/>
+  <hasViews name="_Posts" belongsTo="//@hasControllers.9"/>
+  <hasViews name="Edit" belongsTo="//@hasControllers.9"/>
+  <hasViews name="New" belongsTo="//@hasControllers.9"/>
+  <hasViews name="Show" belongsTo="//@hasControllers.9"/>
+  <hasControllers name="Comments"/>
+  <hasControllers name="Application"/>
+  <hasControllers name="Friends"/>
+  <hasControllers name="Notification"/>
+  <hasControllers name="Post"/>
+  <hasControllers name="Posts"/>
+  <hasControllers name="Private_Threads"/>
+  <hasControllers name="Search"/>
+  <hasControllers name="User_Sessions"/>
+  <hasControllers name="Users"/>
 </metamodel:Model>

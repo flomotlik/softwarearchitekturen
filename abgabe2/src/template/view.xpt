@@ -4,13 +4,13 @@
 
 
 «DEFINE view FOR metamodel::View»
-	«FILE name + ".erb"»
+	«FILE this.belongsTo.name.toLowerCase() + "/" + name.toLowerCase() + ".html.erb"»
 <html>
   <head>
-    <title>«name»</title>
+    <title>«name.replaceAll("_", "")»</title>
   <head>
   <body>
-    <h1>«name»</h1>
+    <h1>«name.replaceAll("_", "")»</h1>
   </body>
 </html>
 	«ENDFILE»

@@ -2,3 +2,11 @@ import data;
 context metamodel::View ERROR
 	 "Names must be more than one char long" :
 	 name.length > 1;
+
+context metamodel::View ERROR
+	"Views must have a belongsTo controller defined" :
+	belongsTo != null;	 
+	 
+context metamodel::Controller ERROR
+	 "Names must be more than one char long" :
+	 name.length > 1; 

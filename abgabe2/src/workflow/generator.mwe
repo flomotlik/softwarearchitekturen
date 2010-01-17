@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <workflow>
 	<property name="model" value="abgabe2/src/Model.xmi" />
-	<property name="src-gen" value="src-gen" />
+	<property name="src-gen" value="src-gen/app" />
 	
 	<!-- set up EMF for standalone execution -->
 	<bean class="org.eclipse.emf.mwe.utils.StandaloneSetup" >
@@ -21,14 +21,20 @@
 		<checkFile value="metamodel::Checks" />
 		<emfAllChildrenSlot value="model" />
 	</component>
-
+ 
+ 	<component class="org.eclipse.emf.mwe.utils.DirectoryCleaner">
+  		<directory value="${src-gen}"/>
+	</component>
+ 
 	<!--  generate code -->
 	<component class="org.eclipse.xpand2.Generator">
 		<metaModel idRef="mm"/>
-		<expand
-			value="template::view::root FOR model" />
-		<outlet path="${src-gen}" >
-			<postprocessor class="org.eclipse.xpand2.output.JavaBeautifier" />
-		</outlet>
+		<expand value="template::view::root FOR model" />
+		<outlet path="${src-gen}/views" />
+	</component>
+	<component class="org.eclipse.xpand2.Generator">
+		<metaModel idRef="mm"/>
+		<expand value="template::controller::root FOR model" />
+		<outlet path="${src-gen}/controllers" />
 	</component>
 </workflow>
