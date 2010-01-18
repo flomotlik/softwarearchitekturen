@@ -18,6 +18,13 @@ class «name.replaceAll("_", "")» < «IF base != null»«base»«ELSE»ActiveRecord::Ba
   has_many«ELSE-»  has_one«ENDIF-»
  :«has.name»
 «ENDFOREACH-»
+«FOREACH hasAttribute AS t-»
+  «IF t.validatedBy != null-»
+   validates_inclusion_of :«t.name», :in => [«FOREACH t.validatedBy.restrictsTo AS restrict-»
+"«restrict.value»",«ENDFOREACH-»
+  ]
+  «ENDIF-»
+«ENDFOREACH-»
 «FOREACH hasAttribute.typeSelect(metamodel::TransientVariable) AS t-»
   attr_accessor :«t.name»
 «ENDFOREACH-»
