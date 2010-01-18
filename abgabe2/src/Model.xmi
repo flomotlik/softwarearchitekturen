@@ -56,7 +56,7 @@
     <hasAttribute xsi:type="metamodel:PlainVariable" type="//@types.3" name="user_id"/>
     <hasAttribute xsi:type="metamodel:PlainVariable" type="//@types.2" name="created_at"/>
     <hasAttribute xsi:type="metamodel:PlainVariable" type="//@types.2" name="updated_at"/>
-    <hasTransientAttr name="search_hit"/>
+    <hasAttribute xsi:type="metamodel:TransientVariable" type="//@types.4" name="search_hit"/>
   </hasEntities>
   <hasEntities name="Friendship">
     <hasAttribute xsi:type="metamodel:PlainVariable" type="//@types.2" name="date"/>
@@ -67,7 +67,12 @@
     <belongsToEntity name="user" otherEntity="//@hasEntities.14"/>
   </hasEntities>
   <hasEntities name="Notification">
-    <hasAttribute xsi:type="metamodel:PlainVariable" type="//@types.1" name="reason"/>
+    <hasAttribute xsi:type="metamodel:PlainVariable" type="//@types.1" name="reason">
+      <validatedBy>
+        <restrictsTo value="comment"/>
+        <restrictsTo value="thread_entry"/>
+      </validatedBy>
+    </hasAttribute>
     <hasAttribute xsi:type="metamodel:PlainVariable" type="//@types.3" name="user_id"/>
     <hasAttribute xsi:type="metamodel:PlainVariable" type="//@types.2" name="date"/>
     <hasAttribute xsi:type="metamodel:PlainVariable" type="//@types.3" name="object_id"/>
@@ -96,7 +101,7 @@
     <hasAttribute xsi:type="metamodel:PlainVariable" type="//@types.3" name="author_user_id"/>
     <hasAttribute xsi:type="metamodel:PlainVariable" type="//@types.2" name="created_at"/>
     <hasAttribute xsi:type="metamodel:PlainVariable" type="//@types.2" name="updated_at"/>
-    <hasTransientAttr name="date_of_newest_entry"/>
+    <hasAttribute xsi:type="metamodel:TransientVariable" type="//@types.2" name="date_of_newest_entry"/>
     <hasEntity name="thread_entries" otherEntity="//@hasEntities.7" cardinalityMany="true"/>
     <hasEntity name="user_threads" otherEntity="//@hasEntities.13" cardinalityMany="true"/>
   </hasEntities>
@@ -107,6 +112,9 @@
     <hasAttribute xsi:type="metamodel:PlainVariable" type="//@types.2" name="created_at"/>
     <hasAttribute xsi:type="metamodel:PlainVariable" type="//@types.2" name="updated_at"/>
     <belongsToEntity name="thread"/>
+    <isObservedBy>
+      <extendedBy queue="notify_queue"/>
+    </isObservedBy>
   </hasEntities>
   <hasEntities name="User_Block">
     <hasAttribute xsi:type="metamodel:PlainVariable" type="//@types.3" name="blocked_id"/>
@@ -171,4 +179,5 @@
   <types xsi:type="metamodel:Datatype" name="string"/>
   <types xsi:type="metamodel:Datatype" name="datetime"/>
   <types xsi:type="metamodel:Datatype" name="integer"/>
+  <types xsi:type="metamodel:Datatype" name="boolean"/>
 </metamodel:Model>
