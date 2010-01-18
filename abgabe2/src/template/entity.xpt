@@ -5,6 +5,11 @@
 «DEFINE entity FOR metamodel::Entity»
 «FILE name.toLowerCase() + ".rb"-»
 class «name.replaceAll("_", "")» < «IF base != null»«base»«ELSE»ActiveRecord::Base«ENDIF»
+«FOREACH actsAs AS actsAs-»
+  acts_as_«actsAs.actsAsWhat» do |c|
+  end
+  
+«ENDFOREACH-»
 «FOREACH belongsToEntity AS belongs-»
   belongs_to :«belongs.name»
 «ENDFOREACH-»
@@ -13,9 +18,30 @@ class «name.replaceAll("_", "")» < «IF base != null»«base»«ELSE»ActiveRecord::Ba
   has_many«ELSE-»  has_one«ENDIF-»
  :«has.name»
 «ENDFOREACH-»
-«FOREACH hasTransientAttr AS t-»
+«FOREACH hasAttribute.typeSelect(metamodel::TransientVariable) AS t-»
   attr_accessor :«t.name»
 «ENDFOREACH-»
 end
 «ENDFILE-»
+
+«FOREACH isObservedBy AS observer-»
+«FILE name.toLowerCase() + "_observer.rb"-»
+require 'activemessaging/processor'
+
+class «name.replaceAll("_", "")»Observer < ActiveRecord::Observer
+  include ActiveMessaging::MessageSender
+  observe «name.replaceAll("_", "")»
+  
+  «FOREACH observer.extendedBy AS extended-»
+  publishes_to :«extended.queue»
+  «ENDFOREACH-»
+  
+  def after_save(«name.toLowerCase()»)
+    payload = «name.toLowerCase()».thread_id.to_s + "!«name.toLowerCase()»!" + «name.toLowerCase()».entry_id.to_s
+    publish :notify_queue, payload
+  end
+end
+«ENDFILE»
+«ENDFOREACH»
+
 «ENDDEFINE» 
