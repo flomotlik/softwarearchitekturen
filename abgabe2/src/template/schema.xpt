@@ -24,7 +24,8 @@ end
 «ENDDEFINE»
 
 «DEFINE entity FOR metamodel::Entity»
+	«IF !name.toLowerCase().matches("user_session")»
 	create_table "«IF name.endsWith("y")»«name.subString(0, name.length-1).toLowerCase()»ies«ELSE»«name.toLowerCase()»s«ENDIF»", :force => true do |t|«FOREACH hasAttribute AS attr»
 		t.«attr.type.name»	"«attr.name.toString()»"«ENDFOREACH»
-	end
+	end«ENDIF»
 «ENDDEFINE»
